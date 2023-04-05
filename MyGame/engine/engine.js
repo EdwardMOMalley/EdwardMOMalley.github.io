@@ -293,6 +293,8 @@ function start(title) {
 
 
 
+
+
 //Add certain functions to the global namespace
 //This allows us to call these functions without
 //a prefix, which better matches Unity

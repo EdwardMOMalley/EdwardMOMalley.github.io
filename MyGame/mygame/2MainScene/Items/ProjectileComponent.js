@@ -1,8 +1,9 @@
 class ProjectileComponent extends Component{
-    constructor(targetX,targetY){
+    constructor(damage,targetX,targetY){
         super()
         this.targetX = targetX
         this.targetY = targetY
+        this.damage = damage
 
     }
     start(){
@@ -13,7 +14,6 @@ class ProjectileComponent extends Component{
         }
         this.projectileLifespan =25
         this.velocity
-        this.damage = 25
         this.enemyController = GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController")
 
     }

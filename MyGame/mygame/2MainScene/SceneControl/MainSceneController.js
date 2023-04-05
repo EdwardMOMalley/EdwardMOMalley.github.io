@@ -14,6 +14,9 @@ class MainSceneController extends Component{
             console.log("PlayerDied")
 
         }
+        if(eventName == "TimeVictory"){
+            SceneManager.changeScene(2)
+        }
 
     }
 }

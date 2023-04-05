@@ -3,6 +3,7 @@ class ExperienceObject extends GameObject{
     constructor(transform) {
         super();
         this.transform = transform
+        this.transform.sx = 1
 
 
       }

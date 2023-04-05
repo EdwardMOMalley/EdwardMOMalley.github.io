@@ -50,7 +50,7 @@ class MainEnemyController extends Component{
     handleUpdate(component,eventName){
         if(eventName == "BasicEnemySpawned"){
             this.currentEnemies.push(component.parent)
-            console.log("BasicEnemySpawned")
+            //console.log("BasicEnemySpawned")
         }
     }
 

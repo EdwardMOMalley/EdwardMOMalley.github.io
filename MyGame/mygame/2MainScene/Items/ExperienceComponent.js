@@ -3,7 +3,7 @@ class ExperienceComponent extends Component{
     start(){
         this.playerLocation = GameObject.getObjectByName("PlayerObject").transform
         this.player = GameObject.getObjectByName("PlayerObject")
-        this.speed = this.player.getComponent("PlayerController").speed*1.1
+        this.speed = this.player.getComponent("PlayerController").speed*1.5
         this.addListener(GameObject.getObjectByName("PlayerObject").getComponent("PlayerController"))
     }
     update(){

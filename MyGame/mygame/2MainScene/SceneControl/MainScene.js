@@ -7,6 +7,9 @@ import "../Enemy/EnemyControlObject.js"
 import "../Hud/HudHealthBarObject.js"
 import "../Hud/HudHealthBarObject.js"
 import "../Hud/HudBoarderObject.js"
+import "../Hud/HudTimerObject.js"
+import "./MainTimer.js"
+import "../Items/ShieldObject.js"
 class MainScene extends Scene{
     constructor(){
         super("brown")
@@ -19,11 +22,16 @@ class MainScene extends Scene{
         }
         this.addGameObject(new GameObject("MainSceneControllerObject").addComponent(new MainSceneController()))
 
+
         //World
         this.addGameObject(new GameObject("FloorObject").addComponent(new FloorComponent()))
 
+        //Timer
+        this.addGameObject(new GameObject("MainTimerObject").addComponent(new MainTimer()))
+
         //Player
         this.addGameObject(new PlayerObject())
+        this.addGameObject(new ShieldObject())
 
         //Enemies
         this.addGameObject(new EnemyControlObject())
@@ -31,6 +39,7 @@ class MainScene extends Scene{
         //Hud
        // this.addGameObject(new HudBoarderObject())
         //this.addGameObject(new HudHealthBarObject())
+        this.addGameObject(new HudTimerObject())
     }
 
 }

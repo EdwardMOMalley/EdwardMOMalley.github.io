@@ -2,8 +2,8 @@ class PlayerController extends Component{
     name = "PlayerController"
     start(){
         //Stats
-        this.size = 20
-        this.speed = 10
+        this.size = 15
+        this.speed = 3
         this.level = 1
         this.currentExperience = 0
         this.experienceToLevel = 1
@@ -12,6 +12,7 @@ class PlayerController extends Component{
         this.invincible = false
         this.invincibleTimer = 50
 
+        this.weapon = this.parent.components[3]
 
         //Transform
         this.transform.x = 0
@@ -22,6 +23,7 @@ class PlayerController extends Component{
         //Required World Information and Listeners
         this.worldSize = GameObject.getObjectByName("FloorObject").getComponent("FloorComponent").size
         this.addListener(GameObject.getObjectByName("MainSceneControllerObject").getComponent("MainSceneController"))
+        this.addListener(this.parent.getComponent("PlayerInventoryComponent"))
         this.body = this.parent.components[2]
     }
 
@@ -45,7 +47,8 @@ class PlayerController extends Component{
         if(this.currentExperience >= this.experienceToLevel){
             this.level++
             this.currentExperience = 0
-        }
+            this.updateListeners("ApplyUpgrade")
+        }   
 
         //Movement
         {
