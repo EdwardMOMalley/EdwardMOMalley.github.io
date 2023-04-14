@@ -2,9 +2,14 @@ class ExperienceComponent extends Component{
     name = "ExperienceComponent"
     start(){
         this.playerLocation = GameObject.getObjectByName("PlayerObject").transform
-        this.player = GameObject.getObjectByName("PlayerObject")
-        this.speed = this.player.getComponent("PlayerController").speed*1.5
-        this.addListener(GameObject.getObjectByName("PlayerObject").getComponent("PlayerController"))
+        this.player = GameObject.getObjectByName("PlayerObject").getComponent("PlayerController")
+        this.speed = this.player.speed*1.5
+        this.addListener(this.player)
+        this.delta = {
+            x: 0,
+            y: 0
+        }
+        this.distanceToPlayer
     }
     update(){
         if(!SceneManager.isRunning){
@@ -17,19 +22,18 @@ class ExperienceComponent extends Component{
             y:this.speed * Math.sin(this.angle)
         }
 
-        if(Math.abs(this.playerLocation.x+this.transform.x - this.playerLocation.x*2)<this.transform.sx/2 + (this.player.transform.sx/2)*6){
-            if(Math.abs(this.playerLocation.y+this.transform.y - this.playerLocation.y*2)<this.transform.sy/2 + (this.player.transform.sy/2)*6){
-                this.transform.x += this.velocity.x
-                this.transform.y += this.velocity.y
-            }
-
+        this.delta.x = Math.abs(this.transform.x - (this.playerLocation.x))
+        this.delta.y = Math.abs(this.transform.y - (this.playerLocation.y))
+        this.distanceToPlayer = Math.sqrt(this.delta.x * this.delta.x + this.delta.y * this.delta.y)
+        if(this.distanceToPlayer <= this.player.xpPickupRange){
+            this.transform.x += this.velocity.x
+            this.transform.y += this.velocity.y
         }
-        if(Math.abs(this.playerLocation.x+this.transform.x - this.playerLocation.x*2)<this.transform.sx/2 + (this.player.transform.sx/2)){
-            if(Math.abs(this.playerLocation.y+this.transform.y - this.playerLocation.y*2)<this.transform.sy/2 + (this.player.transform.sy/2)){
+        if(this.distanceToPlayer <= this.player.size){
                 this.updateListeners("ExperiencePickup")
             }
-        }
-    
+            console.log(this.distanceToPlayer)
+
 }
 
 }

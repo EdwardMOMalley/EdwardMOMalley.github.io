@@ -10,6 +10,7 @@ import "../Hud/HudBoarderObject.js"
 import "../Hud/HudTimerObject.js"
 import "./MainTimer.js"
 import "../Items/ShieldObject.js"
+import "../Items/AutoLaserObject.js"
 class MainScene extends Scene{
     constructor(){
         super("brown")
@@ -32,6 +33,7 @@ class MainScene extends Scene{
         //Player
         this.addGameObject(new PlayerObject())
         this.addGameObject(new ShieldObject())
+        this.addGameObject(new AutoLaserObject())
 
         //Enemies
         this.addGameObject(new EnemyControlObject())

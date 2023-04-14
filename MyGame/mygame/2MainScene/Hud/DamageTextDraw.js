@@ -5,7 +5,7 @@ class DamageTextDraw extends Component{
     }
     draw(ctx){
         ctx.fillStyle = "white"
-        ctx.font = "20px helvettica"
+        ctx.font = "15px helvettica"
         ctx.fillText(this.text,this.transform.x,this.transform.y)
     }
 }

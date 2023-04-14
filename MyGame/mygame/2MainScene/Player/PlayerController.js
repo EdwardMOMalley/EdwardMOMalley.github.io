@@ -11,6 +11,7 @@ class PlayerController extends Component{
         this.hitpoints = this.maxHitpoints
         this.invincible = false
         this.invincibleTimer = 50
+        this.xpPickupRange = 100
 
         this.weapon = this.parent.components[3]
 

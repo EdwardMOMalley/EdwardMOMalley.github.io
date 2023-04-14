@@ -6,34 +6,48 @@ class Peashooter extends Component{
         this.fireRateTimer = 0
         this.capacity = 6
         this.damage = 25
+        this.range = 150
         this.ammoLoaded = this.capacity
         this.reloadSpeed = 50
         this.reloadTimer = 0
+        this.projectileLifespan = 25
+        this.isExplosive = true
         this.isReloading = false
         this.nearestDistance = 1000
-        this.targetedEnemy
+        this.targetedEnemy = undefined
         this.enemyController = GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController")
     }
 
     update(){
+        if (!SceneManager.isRunning) {
+            return
+        }
         if(this.enemyController.currentEnemies){
             this.enemies = this.enemyController.currentEnemies
         }
 
 
 
-        this.enemies.forEach(enemy =>{
-            let distance = Math.abs(this.transform.x-enemy.transform.x)+Math.abs(this.transform.y-enemy.transform.y)
-            if( distance < this.nearestDistance){
-                this.nearestDistance = distance
-                this.targetedEnemy = enemy
+        this.enemies.forEach(enemy => {
+            if (enemy.components[1].distanceToPlayer <= this.range) {
+                if(!this.targetedEnemy){
+                    this.targetedEnemy = enemy
+                }
+                if (this.targetedEnemy && enemy.components[1].distanceToPlayer < this.targetedEnemy.components[1].distanceToPlayer) {
+                    this.targetedEnemy = enemy
+                }
             }
-        
         })
+        if(this.targetedEnemy && this.targetedEnemy.components[1].distanceToPlayer > this.range){
+            this.targetedEnemy = undefined
+        }
+        if(this.targetedEnemy && this.targetedEnemy.components[1].hitpoints <= 0){
+            this.targetedEnemy = undefined
+        }
         if(this.targetedEnemy){
             if(this.fireRateTimer <=0){
                 if(this.ammoLoaded > 0){
-                    //GameObject.instantiate(new ProjectileObject(this.damage,this.transform.x,this.transform.y,this.targetedEnemy.transform.x,this.targetedEnemy.transform.y))
+                    GameObject.instantiate(new ProjectileObject(this.isExplosive,this.damage,this.projectileLifespan,this.transform.x,this.transform.y,this.targetedEnemy.transform.x,this.targetedEnemy.transform.y))
                     this.ammoLoaded--
                     this.fireRateTimer = this.fireRate
                 }

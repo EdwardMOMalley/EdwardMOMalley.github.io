@@ -1,9 +1,11 @@
 import "./ProjectileComponent.js"
 class ProjectileObject extends GameObject{
     name = "ProjectileObject"
-    constructor(damage,transformX,transformY,targetX,targetY) {
+    constructor(isExplosive,damage,lifespan,transformX,transformY,targetX,targetY) {
         super();
         this.damage = damage
+        this.isExplosive = isExplosive
+        this.projectileLifespan = lifespan
         this.transformx = transformX
         this.transformy = transformY
         this.targetX = targetX
@@ -17,7 +19,8 @@ class ProjectileObject extends GameObject{
         this.transform.sx = 5
         this.transform.x = this.transformx
         this.transform.y = this.transformy
-        this.addComponent(new ProjectileComponent(this.damage,this.targetX,this.targetY)) 
+        //explosive,damage,lifespawn,target
+        this.addComponent(new ProjectileComponent(this.isExplosive,this.damage,this.projectileLifespan,this.targetX,this.targetY)) 
         this.addComponent(new Circle("blue"))
  
     }

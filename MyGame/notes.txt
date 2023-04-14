@@ -1,1 +1,11 @@
-add layering, should help with Hud
+move 0 0 to center
+scale into logical space
+translate via camera
+
+\
+gui space
+move w/ letterboxing
+scale into logical space
+github pages
+
+
