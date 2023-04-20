@@ -1,4 +1,4 @@
-import "/engine/engine.js"
+import "../engine/engine.js"
 import "./1StartScene/StartScene.js"
 import "./2MainScene/SceneControl/MainScene.js"
 import "./3WinScene/WinScene.js"
