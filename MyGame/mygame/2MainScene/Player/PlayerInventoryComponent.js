@@ -1,35 +1,42 @@
 class PlayerInventoryComponent extends Component{
     name = "PlayerInventoryComponent"
-    primaryUpgrades = []
     start(){
-        //Add main weapon to listeners
+        
+        //Main weapon and main weapon upgrades
         this.weapon = this.parent.components[3]
+        this.primaryUpgrades = this.weapon.upgrades
 
-        this.peashooterUpgrades = [
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Capacity",upgradeValue:0.1,upgradeName:"Capacity++",upgradeDescription:"Increase ammo capacity of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"FireRate",upgradeValue:0.1,upgradeName:"FireRate++",upgradeDescription:"Increase Fire rate of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
-        ]
+        //Player upgrades include speed, hp, playersize
+        this.player = this.parent.components[1]
+        this.playerUpgrades = this.player.upgrades
 
-        if(this.parent.components[3].name == "Peashooter"){
-            this.primaryUpgrades = this.peashooterUpgrades
-        }
+        //Items include autolaser, shield, pulsewave?
+        this.itemUpgrades = []
+
     }
     update(){
-        this.primaryUpgrades.sort(() => Math.random() - 0.5)
 
     }
-
     handleUpdate(component,eventName){
         if(eventName == "ApplyUpgrade"){
             this.primaryUpgrades.sort(() => Math.random() - 0.5)
             if(this.primaryUpgrades[0].upgradeType == "Damage"){
-                this.weapon.damage +=Math.round(this.weapon.damage* this.primaryUpgrades[0].upgradeValue)
+                if(this.primaryUpgrades[0].upgradeValue >= 1){
+                    this.weapon.damage +=this.primaryUpgrades[0].upgradeValue
+                }
+                else{
+                    this.weapon.damage +=Math.round(this.weapon.damage* this.primaryUpgrades[0].upgradeValue)
+                }
+   
                 console.log("Damage: " + this.weapon.damage)
             }
             if(this.primaryUpgrades[0].upgradeType == "Capacity"){
-                this.weapon.capacity +=Math.round(this.weapon.capacity* this.primaryUpgrades[0].upgradeValue)
+                if(this.primaryUpgrades[0].upgradeValue >= 1){
+                    this.weapon.capacity += this.primaryUpgrades[0].upgradeValue
+                }
+                else{
+                    this.weapon.capacity +=Math.round(this.weapon.capacity* this.primaryUpgrades[0].upgradeValue)
+                }
                 console.log("Capacity: " + this.weapon.capacity)
             }
             if(this.primaryUpgrades[0].upgradeType == "FireRate"){
@@ -40,8 +47,24 @@ class PlayerInventoryComponent extends Component{
                 this.weapon.reloadSpeed -= Math.round(this.weapon.reloadSpeed * this.primaryUpgrades[0].upgradeValue)
                 console.log("ReloadSpeed: " + this.weapon.reloadSpeed)
             }
+            if(this.primaryUpgrades[0].upgradeType == "Radius"){
+                this.weapon.explosionRadius += this.weapon.baseExplosionRadius*this.primaryUpgrades[0].upgradeValue
+                console.log("Explosion Radius: " + this.weapon.explosionRadius)
+            }
 
 
+        }
+        if(eventName == "AutoLaserAquired"){
+            console.log("Autolaser")
+            
+        }
+        if(eventName == "ShieldAquired"){
+            console.log("shield")
+            
+        }
+        if(eventName == "PulseEmitterAquired"){
+            console.log("pulsemitter")
+            
         }
 
     }

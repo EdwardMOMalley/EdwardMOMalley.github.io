@@ -32,7 +32,6 @@ class ExperienceComponent extends Component{
         if(this.distanceToPlayer <= this.player.size){
                 this.updateListeners("ExperiencePickup")
             }
-            console.log(this.distanceToPlayer)
 
 }
 

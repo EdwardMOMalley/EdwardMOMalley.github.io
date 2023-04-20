@@ -8,7 +8,8 @@ class AutoLaserDrawComponent extends Component{
     }
     draw(ctx){
         if(this.targetedEnemy){
-            ctx.strokeStyle = "blue"
+            //Purple
+            ctx.strokeStyle = "#870e7b"
             ctx.beginPath()
             ctx.moveTo(this.transform.x,this.transform.y)
             ctx.lineTo(this.targetedEnemy.transform.x,this.targetedEnemy.transform.y)

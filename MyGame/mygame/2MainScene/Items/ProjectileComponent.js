@@ -1,21 +1,48 @@
 
 import "./ExplosionObject.js"
 class ProjectileComponent extends Component {
-    constructor(explosive, damage, lifespan, targetX, targetY) {
+    constructor(explosive,explosionRadius, damage,pelletNumber, lifespan, targetX, targetY) {
         super()
+        this.isExplosive = explosive
+        this.explosionRadius = explosionRadius
+        this.damage = damage
+        this.pelletNumber = pelletNumber
+        this.projectileLifespan = lifespan
         this.targetX = targetX
         this.targetY = targetY
-        this.damage = damage
-        this.isExplosive = explosive
-        this.projectileLifespan = lifespan
+
 
     }
     start() {
-        this.angle = Math.atan2(this.targetY - this.transform.y, this.targetX - this.transform.x)
-        this.velocity = {
-            x: 10 * Math.cos(this.angle),
-            y: 10 * Math.sin(this.angle)
+        this.velocty = {
+            x: 1,
+            y: 1
         }
+
+        if(this.pelletNumber == 1){
+            this.angle = Math.atan2(this.targetY - this.transform.y, this.targetX - this.transform.x)
+            this.velocity = {
+                x: 10 * Math.cos(this.angle),
+                y: 10 * Math.sin(this.angle)
+            }
+
+        }
+        else if (this.pelletNumber % 2 == 0){
+            this.angle = Math.atan2(this.targetY - this.transform.y, this.targetX - this.transform.x)+Math.PI/24
+            this.velocity = {
+                x: 10 * Math.cos(this.angle),
+                y: 10 * Math.sin(this.angle)
+            }
+        }
+        else if(this.pelletNumber % 2 != 0 ){
+            this.angle = Math.atan2(this.targetY - this.transform.y, this.targetX - this.transform.x)-Math.PI/24
+            this.velocity = {
+                x: 10 * Math.cos(this.angle),
+                y: 10 * Math.sin(this.angle)
+            }
+
+        }
+
         this.delta = {
             x: 0,
             y: 0
@@ -39,7 +66,7 @@ class ProjectileComponent extends Component {
         }
         if (this.projectileLifespan <= 0) {
             if (this.isExplosive) {
-                GameObject.instantiate(new ExplosionObject())
+                GameObject.instantiate(new ExplosionObject(this.damage,this.explosionRadius,this.transform.x,this.transform.y))
             }
             this.parent.destroy()
         }
@@ -57,7 +84,7 @@ class ProjectileComponent extends Component {
                             y: 10 * Math.sin(this.angle)
                         }
                         if (this.isExplosive) {
-                            GameObject.instantiate(new ExplosionObject(this.transform.x, this.transform.y))
+                            GameObject.instantiate(new ExplosionObject(this.damage,this.explosionRadius,this.transform.x, this.transform.y))
                             this.parent.destroy()
     
                         }
@@ -81,7 +108,7 @@ class ProjectileComponent extends Component {
                         y: 10 * Math.sin(this.angle)
                     }
                     if (this.isExplosive) {
-                        GameObject.instantiate(new ExplosionObject(this.transform.x, this.transform.y))
+                        GameObject.instantiate(new ExplosionObject(this.damage,this.explosionRadius,this.transform.x, this.transform.y))
                         this.parent.destroy()
 
                     }

@@ -9,7 +9,8 @@ class BasicEnemyObject extends GameObject{
     }
     start(){
         this.addComponent(new BasicEnemyComponent())
-        this.addComponent(new Rectangle("yellow"))
+        //Dark red
+        this.addComponent(new Rectangle("#3d0709"))
         this.addComponent(new EnemyHealthBarComponent())
     }
 

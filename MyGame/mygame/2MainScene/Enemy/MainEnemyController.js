@@ -1,3 +1,4 @@
+import "../Items/ExperienceObject.js"
 class MainEnemyController extends Component{
     name = "MainEnemyController"
     start(){
@@ -52,6 +53,16 @@ class MainEnemyController extends Component{
             this.currentEnemies.push(component.parent)
             //console.log("BasicEnemySpawned")
         }
+        if(eventName == "BasicEnemyDestroyed"){
+            this.numberOfEnemies--
+            console.log("here4")
+            GameObject.instantiate(new ExperienceObject(component.parent.transform.x,component.parent.transform.y))
+        }
+        if(eventName == "BossEnemyDestroyed"){
+            this.numberOfBosses--
+            GameObject.instantiate(new ExperienceObject(component.parent.transform.x,component.parent.transform.y))
+        }
+
     }
 
 }

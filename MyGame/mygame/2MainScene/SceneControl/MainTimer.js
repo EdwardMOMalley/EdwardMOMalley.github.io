@@ -1,18 +1,18 @@
 class MainTimer extends Component{
     name = "MainTimer"
     start(){
-        this.timeGoal = 60
+        this.timeGoal = 60 * 5
         this.currentTime = this.timeGoal
-        this.subTimer = 0
+        this.subTimer = frameRate
 
         this.addListener(GameObject.getObjectByName("MainSceneControllerObject").getComponent("MainSceneController"))
         }
 
     update(){
-        this.subTimer++
-            if(this.subTimer >= 25){
+        this.subTimer--
+            if(this.subTimer <= 0){
             this.currentTime--
-            this.subTimer = 0
+            this.subTimer = frameRate
         }
         if(this.currentTime < 0){
             this.updateListeners("TimeVictory")

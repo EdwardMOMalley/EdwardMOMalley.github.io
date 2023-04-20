@@ -7,8 +7,8 @@ class PlayerAmmoBarComponent extends Component{
 
     }
     update(){
-        this.capacity = this.parent.getComponent("Peashooter").capacity
-        this.currentAmmo= this.parent.getComponent("Peashooter").ammoLoaded
+        this.capacity = this.parent.components[3].capacity
+        this.currentAmmo= this.parent.components[3].ammoLoaded
 
     }
 

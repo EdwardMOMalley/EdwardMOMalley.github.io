@@ -1,15 +1,17 @@
 import "./ExperienceComponent.js"
 class ExperienceObject extends GameObject{
-    constructor(transform) {
+    constructor(x,y) {
         super();
-        this.transform = transform
+        this.transform.x = x
+        this.transform.y = y
 
 
       }
     name = "ExperienceObject"
     start(){
-        this.transform.sx = 1.5
-        this.addComponent(new Circle("orange"))
+        this.transform.sx = 4
+        //Gold Color
+        this.addComponent(new Circle("#FFD700"))
         this.addComponent(new ExperienceComponent())  
     }
 

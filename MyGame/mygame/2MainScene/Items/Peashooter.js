@@ -2,20 +2,28 @@ import "./ProjectileObject.js"
 class Peashooter extends Component{
     name = "Peashooter"
     start(){
+        this.fillStyle = "#E1C16E"
         this.fireRate = 20
         this.fireRateTimer = 0
         this.capacity = 6
         this.damage = 25
         this.range = 150
+        this.pellets = 1
         this.ammoLoaded = this.capacity
         this.reloadSpeed = 50
         this.reloadTimer = 0
         this.projectileLifespan = 25
-        this.isExplosive = true
+        this.isExplosive = false
         this.isReloading = false
         this.nearestDistance = 1000
         this.targetedEnemy = undefined
         this.enemyController = GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController")
+        this.upgrades = [
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Capacity",upgradeValue:0.1,upgradeName:"Capacity++",upgradeDescription:"Increase ammo capacity of Peashooter by 10%"},
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"FireRate",upgradeValue:0.1,upgradeName:"FireRate++",upgradeDescription:"Increase Fire rate of Peashooter by 10%"},
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
+        ]
     }
 
     update(){
@@ -47,7 +55,7 @@ class Peashooter extends Component{
         if(this.targetedEnemy){
             if(this.fireRateTimer <=0){
                 if(this.ammoLoaded > 0){
-                    GameObject.instantiate(new ProjectileObject(this.isExplosive,this.damage,this.projectileLifespan,this.transform.x,this.transform.y,this.targetedEnemy.transform.x,this.targetedEnemy.transform.y))
+                    GameObject.instantiate(new ProjectileObject(this.fillStyle,this.isExplosive,1,this.damage,this.pellets,this.projectileLifespan,this.transform.x,this.transform.y,this.targetedEnemy.transform.x,this.targetedEnemy.transform.y))
                     this.ammoLoaded--
                     this.fireRateTimer = this.fireRate
                 }

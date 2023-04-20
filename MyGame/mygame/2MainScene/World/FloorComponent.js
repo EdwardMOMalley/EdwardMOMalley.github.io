@@ -4,7 +4,10 @@ class FloorComponent extends Component{
         this.size = 500
         this.transform.sx = this.size
         this.transform.sy = this.size
-        this.color = "green"
+
+        //green floor
+
+        this.color = "#285428"
     }
 
     draw(ctx){

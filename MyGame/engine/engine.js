@@ -40,6 +40,7 @@ let keysDown = []
 let mouseClick = [-1, -1]
 let mouseX;
 let mouseY
+let frameRate = 25;
 
 //Add event handlers so we capture user input
 //Note the strings has to be all lowercase, e.g. keydown not keyDown or KeyDown
@@ -287,7 +288,7 @@ function start(title) {
     }
 
     //Run the game loop 25 times a second
-    setInterval(gameLoop, 1000 / 25)
+    setInterval(gameLoop, 1000 / frameRate)
 
 }
 
@@ -305,6 +306,7 @@ window.start = start;
 /** Expose the update calls for the testing routines */
 window.engineUpdate = engineUpdate;
 window.engineDraw = engineDraw;
+window.frameRate = frameRate;
 
 
 

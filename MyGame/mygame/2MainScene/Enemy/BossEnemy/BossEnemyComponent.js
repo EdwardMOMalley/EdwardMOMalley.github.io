@@ -81,7 +81,7 @@ class BossEnemyComponent extends Component{
         }
 
         if(this.hitpoints <=0){
-            this.updateListeners("BasicEnemyDestroyed")
+            this.updateListeners("BossEnemyDestroyed")
             this.parent.destroy()
         }
 
@@ -118,7 +118,10 @@ class BossEnemyComponent extends Component{
             this.hitpoints -= weapon.damage
            // GameObject.instantiate(new DamageTextObject(weapon.damage,this))
 
-
+    }
+    if(eventName == "EnergyWaveHit"){
+        this.addedVelocityX += weapon.velocity.x
+        this.addedVelocityY += weapon.velocity.y
     }
 
 

@@ -13,7 +13,8 @@ import "../Items/ShieldObject.js"
 import "../Items/AutoLaserObject.js"
 class MainScene extends Scene{
     constructor(){
-        super("brown")
+        //Dark blue background
+        super("#1d1c2e")
     }
     start(){
 
@@ -21,7 +22,7 @@ class MainScene extends Scene{
         if(GameObject.getObjectByName("CameraGameObject").components.length <= 2){
             Camera.main.addComponent(new MainCameraComponent())
         }
-        this.addGameObject(new GameObject("MainSceneControllerObject").addComponent(new MainSceneController()))
+                this.addGameObject(new GameObject("MainSceneControllerObject").addComponent(new MainSceneController()))
 
 
         //World
@@ -32,8 +33,6 @@ class MainScene extends Scene{
 
         //Player
         this.addGameObject(new PlayerObject())
-        this.addGameObject(new ShieldObject())
-        this.addGameObject(new AutoLaserObject())
 
         //Enemies
         this.addGameObject(new EnemyControlObject())

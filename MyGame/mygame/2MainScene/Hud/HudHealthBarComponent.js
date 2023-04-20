@@ -7,7 +7,7 @@ class HudHealthBarComponent extends Component{
         this.worldSize = this.floor.size
 
 
-        this.transform.sx = 10
+        this.transform.sx = 15
         this.transform.sy = 100
         this.transform.x = this.worldSize/2-this.transform.sx/2
         this.transform.y = 0
