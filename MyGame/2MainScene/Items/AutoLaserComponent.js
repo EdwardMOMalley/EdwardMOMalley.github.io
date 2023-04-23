@@ -25,24 +25,24 @@ class AutoLaserComponent extends Component {
             this.enemies = this.enemyController.currentEnemies
         }
         this.enemies.forEach(enemy => {
-            if (enemy.components[1].distanceToPlayer <= this.range) {
+            if (enemy.distanceToPlayer <= this.range) {
                 if(!this.targetedEnemy){
                     this.targetedEnemy = enemy
                 }
-                if (this.targetedEnemy && enemy.components[1].distanceToPlayer < this.targetedEnemy.components[1].distanceToPlayer) {
+                if (this.targetedEnemy && enemy.distanceToPlayer < this.targetedEnemy.distanceToPlayer) {
                     this.targetedEnemy = enemy
                 }
             }
         })
 
-        if(this.targetedEnemy && this.targetedEnemy.components[1].distanceToPlayer > this.range){
+        if(this.targetedEnemy && this.targetedEnemy.distanceToPlayer > this.range){
             this.targetedEnemy = undefined
         }
-        if(this.targetedEnemy && this.targetedEnemy.components[1].hitpoints <= 0){
+        if(this.targetedEnemy && this.targetedEnemy.hitpoints <= 0){
             this.targetedEnemy = undefined
         }
         if(this.targetedEnemy){
-            this.send(this,this.targetedEnemy.components[1],"LaserHit")
+            this.send(this,this.targetedEnemy,"LaserHit")
         }
 
 

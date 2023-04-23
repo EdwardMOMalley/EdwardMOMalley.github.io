@@ -43,20 +43,9 @@ class ExplosionComponent extends Component{
                         x: 10 * Math.cos(this.angle),
                         y: 10 * Math.sin(this.angle)
                     }
-                    if(enemy.getComponent("BasicEnemyComponent")){
-                        this.send(this,enemy.getComponent("BasicEnemyComponent"),"ExplosiveHit")
-
-                    }
-                    if(enemy.getComponent("BossEnemyComponent")){
-                        this.send(this,enemy.getComponent("BossEnemyComponent"),"ExplosiveHit")
-
-                    }
+                        this.send(this,enemy,"ExplosiveHit")
                 }
-
             }
-
-
-
         })
 
     }

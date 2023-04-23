@@ -15,7 +15,7 @@ class EnemySpawnerComponent extends Component{
         this.spawnAngle = 0
         this.spawnX = 0
         this.spawny = 0
-        this.maxTime = GameObject.getObjectByName("MainTimerObject").getComponent("MainTimer").currentTime
+        this.maxTime = GameObject.getObjectByName("MainTimerObject").getComponent("MainTimer").timeGoal
         this.playerObject = GameObject.getObjectByName("PlayerObject")
         this.addListener(this.parent.components[1])
 
@@ -34,28 +34,23 @@ class EnemySpawnerComponent extends Component{
             return
         }
         
-
-        this.functionMainSpawner()
-        //this.functionSingleTest()
-       //this.stressTestSpawnFunction()
-
-
-
-        //separate spawn freqeuncy and spawn patterns
-
-
+        //this.functionMainSpawner()
+       // this.functionSingleTest()
+          this.functionStressTest()
     }
 
     handleUpdate(component,eventName){
+
     }
+
     spawnSingleBoss(){
         this.spawnAngle = Math.random()*(Math.PI*2 - 0) + 0
         this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
         this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
         GameObject.instantiate(new BossEnemyObject(this.spawnX,this.spawnY))
         this.numberOfBosses++
-
     }
+
     spawnSingleBasic(){
         this.spawnAmount = 12;
         this.spawnAngle = Math.random()*(Math.PI*2 - 0) + 0
@@ -64,6 +59,7 @@ class EnemySpawnerComponent extends Component{
         GameObject.instantiate(new BasicEnemyObject(this.spawnX,this.spawnY))
         this.numberOfEnemies++
     }
+
     spawnWaveStressTest(){
         this.spawnAngle = 0
         this.spawnAmount = 500
@@ -76,10 +72,8 @@ class EnemySpawnerComponent extends Component{
             GameObject.instantiate(new BasicEnemyObject(this.spawnX,this.spawnY))
             this.spawnAngle += Math.PI/(this.spawnAmount/2)
             this.numberOfEnemies++
-
         }
         this.spawnAngle = 0
-
     }
 
     spawnWaveFullCircle(){
@@ -92,10 +86,8 @@ class EnemySpawnerComponent extends Component{
             GameObject.instantiate(new BasicEnemyObject(this.spawnX,this.spawnY))
             this.spawnAngle += Math.PI/(this.spawnAmount/2)
             this.numberOfEnemies++
-
         }
         this.spawnAngle = 0
-
     }
 
     functionMainSpawner(){
@@ -134,8 +126,6 @@ class EnemySpawnerComponent extends Component{
                     this.spawnWaveFullCircle()
                     this.spawnTimer = 0
                 }
-
-
             }
             this.spawnTimer++ 
         }
@@ -145,20 +135,17 @@ class EnemySpawnerComponent extends Component{
             this.spawnRate = 30
             if(this.spawnTimer % 2 == 0){
                 this.spawnSingleBasic()
-
             }
             if(this.spawnTimer >= this.spawnRate){
                 if(this.numberOfEnemies <= this.maxEnemies){
                     this.spawnWaveFullCircle()
                     this.spawnTimer = 0
                 }
-
-
             }
             this.spawnTimer++ 
         }
-
     }
+
     functionStressTest(){
         if(this.timeRatio <= 1 && this.timeRatio > 0){
             this.maxEnemies = 1
@@ -170,8 +157,6 @@ class EnemySpawnerComponent extends Component{
             }
             this.spawnTimer++ 
         }
-
-
     }
 
     functionSingleTest(){
@@ -186,8 +171,6 @@ class EnemySpawnerComponent extends Component{
             this.spawnTimer++ 
         }
     }
-
-
 }
 
 window.EnemySpawnerComponent = EnemySpawnerComponent

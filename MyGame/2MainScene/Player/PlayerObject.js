@@ -17,8 +17,8 @@ class PlayerObject extends GameObject{
         //weapon always needs to be in components[3]
         //Peashooter, explosive launcher, scattershot
         this.addComponent(new Peashooter())
-        //this.addComponent(new ScattershotComponent())
-        //this.addComponent(new ExplosiveLauncher())
+        this.addComponent(new ScattershotComponent())
+        this.addComponent(new ExplosiveLauncher())
         this.addComponent(new PlayerInventoryComponent())
         this.addComponent(new PlayerHealthBarComponent())
         this.addComponent(new PlayerAmmoBarComponent())

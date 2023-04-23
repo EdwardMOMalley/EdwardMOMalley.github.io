@@ -9,6 +9,8 @@ import "./Circle.js"
 import "./Line.js"
 import "./Text.js"
 import "./Vector2.js"
+import "./Time.js"
+import Time from "./Time.js"
 
 //True if the gamee is paused, false otherwise
 let pause = false
@@ -99,6 +101,7 @@ function keyDown(e) {
 function engineUpdate() {
     //Handle the case when there is a system level pause.
     if (pause) return
+    Time.update()
 
     //Get a reference to the active scene.
     let scene = SceneManager.getActiveScene()

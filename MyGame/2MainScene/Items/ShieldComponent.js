@@ -26,7 +26,6 @@ class ShielComponent extends Component {
             y: 5 * Math.sin(this.angle)
         }
         this.enemies = this.enemyController.currentEnemies
-
         this.centerX = this.player.transform.x
         this.centerY = this.player.transform.y
         this.angle += this.angularVelocity
@@ -34,16 +33,9 @@ class ShielComponent extends Component {
         this.transform.y = this.centerY + this.shieldRadius * Math.sin(this.angle)
 
         this.enemies.forEach(enemy => {
-            let enemyType = undefined
-            if(enemy.getComponent("BasicEnemyComponent")){
-                enemyType = enemy.getComponent("BasicEnemyComponent")
-            }
-            if(enemy.getComponent("BossEnemyComponent")){
-                enemyType = enemy.getComponent("BossEnemyComponent")
-            }
             if (Math.abs(enemy.transform.x - this.transform.x) < this.transform.sx / 2 + enemy.transform.sx / 2) {
                 if (Math.abs(enemy.transform.y - this.transform.y) < this.transform.sx / 2 + enemy.transform.sy / 2) {
-                    this.send(this, enemyType, "ShieldHit")
+                    this.send(this, enemy, "ShieldHit")
                 }
             }
         })

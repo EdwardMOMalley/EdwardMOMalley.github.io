@@ -1,21 +1,16 @@
-class Time extends Component{
-    name = "Text"
-    fillStyle
-    string 
-    font
-    constructor(string,fillStyle = "white",font="20px Helvettica"){
-        super()
-        this.fillStyle = fillStyle
-        this.string = string
-        this.font = font
-    }
+class Time {
+    static deltaTime = 1/25
+
+    static time = 0
+
+    static frameCount = 0
 
 
-    draw(ctx){
-        ctx.fillStyle = this.fillStyle
-        ctx.font = this.font
-        ctx.fillText(this.string,this.transform.x,this.transform.y)
+    static update(){
+        Time.time += Time.deltaTime
+        Time.frameCount++
     }
 }
 
 window.Time = Time
+export default Time

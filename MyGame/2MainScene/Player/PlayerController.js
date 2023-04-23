@@ -61,7 +61,6 @@ class PlayerController extends Component{
         }
         if(this.currentExperience >= this.experienceToLevel){
             this.level++
-            console.log(this.listeners)
             if(this.level == 2){
                 this.updateListeners("Autolaser Aquired")
                 GameObject.instantiate(new AutoLaserObject())

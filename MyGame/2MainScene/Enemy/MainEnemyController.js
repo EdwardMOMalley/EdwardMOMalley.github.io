@@ -50,17 +50,16 @@ class MainEnemyController extends Component{
 
     handleUpdate(component,eventName){
         if(eventName == "BasicEnemySpawned"){
-            this.currentEnemies.push(component.parent)
+            this.currentEnemies.push(component)
             //console.log("BasicEnemySpawned")
         }
         if(eventName == "BasicEnemyDestroyed"){
             this.numberOfEnemies--
-            console.log("here4")
-            GameObject.instantiate(new ExperienceObject(component.parent.transform.x,component.parent.transform.y))
+            GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
         }
         if(eventName == "BossEnemyDestroyed"){
             this.numberOfBosses--
-            GameObject.instantiate(new ExperienceObject(component.parent.transform.x,component.parent.transform.y))
+            GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
         }
 
     }

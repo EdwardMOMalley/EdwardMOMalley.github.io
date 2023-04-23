@@ -39,20 +39,9 @@ class EnergyWaveComponent extends Component{
                         x: this.maxRadius*2/this.lifespan * Math.cos(this.angle),
                         y: this.maxRadius*2/this.lifespan* Math.sin(this.angle)
                     }
-                    if(enemy.getComponent("BasicEnemyComponent")){
-                        this.send(this,enemy.getComponent("BasicEnemyComponent"),"EnergyWaveHit")
-
-                    }
-                    if(enemy.getComponent("BossEnemyComponent")){
-                        this.send(this,enemy.getComponent("BossEnemyComponent"),"EnergyWaveHit")
-
-                    }
+                        this.send(this,enemy,"EnergyWaveHit")
                 }
-
             }
-
-
-
         })
 
         if(this.timeAlive >= this.lifespan){

@@ -5,7 +5,7 @@ class HudTimerComponent extends Component{
         this.worldSize = GameObject.getObjectByName("FloorObject").getComponent("FloorComponent").size 
         this.transform.x = 0-10
         this.transform.y = -250+20
-        this.transform.sx = 35
+        this.transform.sx = 50
 
     }
     update(){
