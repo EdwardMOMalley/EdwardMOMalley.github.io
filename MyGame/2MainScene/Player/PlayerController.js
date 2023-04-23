@@ -1,6 +1,7 @@
 import "../Items/AutoLaserObject.js"
 import "../Items/ShieldObject.js"
 import "../Items/PulseEmitterObject.js"
+import "../Hud/UpgradeBackgroundObject.js"
 class PlayerController extends Component{
     name = "PlayerController"
     start(){
@@ -61,6 +62,7 @@ class PlayerController extends Component{
         }
         if(this.currentExperience >= this.experienceToLevel){
             this.level++
+            GameObject.instantiate(new UpgradeBackgroundObject())
             if(this.level == 2){
                 this.updateListeners("Autolaser Aquired")
                 GameObject.instantiate(new AutoLaserObject())

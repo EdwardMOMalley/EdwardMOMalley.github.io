@@ -7,6 +7,9 @@ class Time {
 
 
     static update(){
+        if (!SceneManager.isRunning) {
+            return
+        }
         Time.time += Time.deltaTime
         Time.frameCount++
     }

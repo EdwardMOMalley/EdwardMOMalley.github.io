@@ -5,12 +5,19 @@ import "./GameObject.js"
 import "./Transform.js"
 import "./Camera.js"
 import "./Rectangle.js"
+import "./RectangleStatic.js"
 import "./Circle.js"
 import "./Line.js"
 import "./Text.js"
 import "./Vector2.js"
 import "./Time.js"
-import Time from "./Time.js"
+import "./Input.js"
+
+class EngineGlobals{
+    static requestedAspectRatio = 1
+    static logicalWidth = 500
+}
+window.EngineGlobals = EngineGlobals
 
 //True if the gamee is paused, false otherwise
 let pause = false
@@ -24,8 +31,6 @@ link.href = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20vi
 link.rel = "icon";
 document.getElementsByTagName("head")[0].appendChild(link); // for IE6
 
-let testOffset = 30;
-let nextOffset = 25;
 
 //-----------------------------------------------------------
 //Input Event handling
@@ -39,34 +44,12 @@ let ctx = canvas.getContext("2d");
 //Store the state of the user input
 //This will be in its own file eventually
 let keysDown = []
-let mouseClick = [-1, -1]
-let mouseX;
-let mouseY
 let frameRate = 25;
 
 //Add event handlers so we capture user input
 //Note the strings has to be all lowercase, e.g. keydown not keyDown or KeyDown
 document.addEventListener("keydown", keyDown)
 document.addEventListener("keyup", keyUp)
-
-document.addEventListener("mousedown", mouseDown);
-document.addEventListener("mouseup", mouseUp);
-document.addEventListener("mousemove", mouseMove);
-
-
-//Mouse event handlers
-function mouseDown(e) {
-    mouseClick[0] = e.clientX
-    mouseClick[1] = e.clientY
-    //console.log("mouseDown: " + e.clientX + " " + e.clientY)
-}
-function mouseUp(e) {
-    mouseClick[0] = -1
-    mouseClick[1] = -1
-}
-function mouseMove(e) {
-    //console.log("mouseMove: " + e.clientX + " " + e.clientY)
-}
 
 //Key up event handlers
 function keyUp(e) {
@@ -99,6 +82,8 @@ function keyDown(e) {
 
 //Update the engine
 function engineUpdate() {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
     //Handle the case when there is a system level pause.
     if (pause) return
     Time.update()
@@ -155,21 +140,20 @@ function engineUpdate() {
             }
         }
     }
+    Input.finishFrame()
 
 
 
 }
 
-let aspectRatio = 1
-let logicalWidth = 500
+
 
 //Draw all the objects in the scene
 function engineDraw() {
 
     //Match the size of the canvas to the browser's size
     //This allows us to respond to browser size changes
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+
 
 
 
@@ -179,20 +163,20 @@ function engineDraw() {
     ctx.fillStyle = Camera.main.getComponent("Camera").fillStyle;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    let currentAspectRatio = canvas.width / canvas.height;
+    let browserAspectRatio = canvas.width / canvas.height;
     let offsetX = 0;
     let offsetY = 0;
-    let actualWidth = canvas.width
-    if (aspectRatio > currentAspectRatio) {
-        let desiredHeight = canvas.width / aspectRatio;
+    let browserWidth = canvas.width
+    if (EngineGlobals.requestedAspectRatio > browserAspectRatio) {
+        let desiredHeight = canvas.width / EngineGlobals.requestedAspectRatio;
         let amount = (canvas.height - desiredHeight) / 2;
         offsetY = amount;
     }
     else {
-        let desiredWidth = canvas.height * aspectRatio
+        let desiredWidth = canvas.height * EngineGlobals.requestedAspectRatio
         let amount = (canvas.width - desiredWidth) / 2;
         offsetX = amount
-        actualWidth -= 2 * amount
+        browserWidth -= 2 * amount
     }
 
 
@@ -204,7 +188,7 @@ function engineDraw() {
 
     ctx.save();
 
-    let logicalScale = actualWidth / logicalWidth
+    let logicalScale = browserWidth / EngineGlobals.logicalWidth
     ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
 
     
@@ -224,13 +208,32 @@ function engineDraw() {
             }
         }
     }
+    
     ctx.translate(offsetX, offsetY)
     ctx.restore()
+
+    let zeroX = 0
+    let zeroY = 0
+    if (EngineGlobals.requestedAspectRatio > browserAspectRatio) {
+        let desiredHeight = canvas.width / EngineGlobals.requestedAspectRatio;
+        let amount = (canvas.height - desiredHeight) / 2;
+        zeroY = amount
+        ctx.fillStyle = "navy"
+        ctx.fillRect(0, 0, canvas.width, amount);
+        ctx.fillRect(0, canvas.height - amount, canvas.width, amount);
+    }
+    else {
+        let desiredWidth = canvas.height * EngineGlobals.requestedAspectRatio
+        let amount = (canvas.width - desiredWidth) / 2;
+        zeroX = amount
+        ctx.fillStyle = "navy"
+        ctx.fillRect(0, 0, amount, canvas.height);
+        ctx.fillRect(canvas.width - amount, 0, amount, canvas.height);
+    }
+
     ctx.save()
-
-    ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
+    ctx.translate(zeroX,zeroY)
     ctx.scale(logicalScale, logicalScale)
-
     //Static draw
     for (let gameObject of scene.gameObjects) {
         for (let component of gameObject.components) {
@@ -242,20 +245,7 @@ function engineDraw() {
     ctx.restore()
 
 
-    if (aspectRatio > currentAspectRatio) {
-        let desiredHeight = canvas.width / aspectRatio;
-        let amount = (canvas.height - desiredHeight) / 2;
-        ctx.fillStyle = "navy"
-        ctx.fillRect(0, 0, canvas.width, amount-200);
-        ctx.fillRect(0, canvas.height - amount, canvas.width, amount);
-    }
-    else {
-        let desiredWidth = canvas.height * aspectRatio
-        let amount = (canvas.width - desiredWidth) / 2;
-        ctx.fillStyle = "navy"
-        ctx.fillRect(0, 0, amount, canvas.height);
-        ctx.fillRect(canvas.width - amount, 0, amount, canvas.height);
-    }
+
 
 
 
@@ -283,6 +273,9 @@ function engineDraw() {
  */
 function start(title) {
     document.title = title
+    Input.start()
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
     function gameLoop() {
         engineUpdate()
 
@@ -315,5 +308,3 @@ window.frameRate = frameRate;
 
 /** The state of the keyboard.. */
 window.keysDown = keysDown;
-window.mouseClick = mouseClick
-window.logicalWidth = logicalWidth

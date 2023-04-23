@@ -22,6 +22,9 @@ class EnemySpawnerComponent extends Component{
     }
 
     update(){
+        if (!SceneManager.isRunning) {
+            return
+        }
         if( GameObject.getObjectByName("MainTimerObject")){
             this.timeRemaining = GameObject.getObjectByName("MainTimerObject").getComponent("MainTimer").currentTime
         }
