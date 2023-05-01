@@ -13,21 +13,22 @@ class ExplosiveLauncher extends WeaponTemplate{
         this.range = 200
         this.pellets = 1
         this.ammoLoaded = this.capacity
-        this.reloadSpeed = 50
+        this.reloadSpeed = 125
         this.reloadTimer = 0
         this.projectileLifespan = 30
         this.isExplosive = true
         this.isReloading = false
+        this.nearest = 10000
     }
     start(){
 
         this.targetedEnemy = undefined
         this.enemyController = GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController")
         this.upgrades = [
-           // {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
             {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Capacity",upgradeValue:1,upgradeName:"Capacity++",upgradeDescription:"Increase ammo capacity of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Radius",upgradeValue:0.5,upgradeName:"Radius++",upgradeDescription:"Increase explosion radius of Peashooter by 10%"},
-            //{isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Radius",upgradeValue:0.5,upgradeName:"Radius++",upgradeDescription:"Increase explosion radius of Explosive Launcher by 50%"},
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
         ]
     }
 
@@ -45,9 +46,11 @@ class ExplosiveLauncher extends WeaponTemplate{
             if (enemy.distanceToPlayer <= this.range) {
                 if(!this.targetedEnemy){
                     this.targetedEnemy = enemy
+                    this.nearest = this.targetedEnemy.distanceToPlayer
                 }
                 if (this.targetedEnemy && enemy.distanceToPlayer < this.targetedEnemy.distanceToPlayer) {
                     this.targetedEnemy = enemy
+                    this.nearest = this.targetedEnemy.distanceToPlayer
                 }
             }
         })
@@ -77,8 +80,6 @@ class ExplosiveLauncher extends WeaponTemplate{
         }
         this.fireRateTimer--
         //this.targetedEnemy = undefined
-        this.nearestDistance = 1000
-
     }
 
     handleUpdate(component,eventName){

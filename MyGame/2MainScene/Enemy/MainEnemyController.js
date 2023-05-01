@@ -14,7 +14,7 @@ class MainEnemyController extends Component{
         }
         this.keptEnemies = []
         for(let enemy of this.currentEnemies){
-            if(!enemy.markedForDestroy){
+            if(!enemy.parent.markedForDestroy){
                 this.keptEnemies.push(enemy)
             }
         }
@@ -53,14 +53,7 @@ class MainEnemyController extends Component{
             this.currentEnemies.push(component)
             //console.log("BasicEnemySpawned")
         }
-        if(eventName == "BasicEnemyDestroyed"){
-            this.numberOfEnemies--
-            GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
-        }
-        if(eventName == "BossEnemyDestroyed"){
-            this.numberOfBosses--
-            GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
-        }
+
 
     }
 

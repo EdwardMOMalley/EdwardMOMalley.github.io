@@ -4,7 +4,7 @@ class ShieldObject extends GameObject{
     start(){
         //this.addComponent(new ShieldComponentDraw())
         //light blue
-        this.addComponent(new Rectangle("#3c9ed6"))
+        this.addComponent(new Circle("#3c9ed6"))
         this.addComponent(new ShieldComponent())
 
     }

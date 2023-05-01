@@ -8,11 +8,10 @@ class AutoLaserComponent extends Component {
         this.player = GameObject.getObjectByName("PlayerObject")
         this.range = 100
         this.upgrades = [
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Capacity",upgradeValue:0.1,upgradeName:"Capacity++",upgradeDescription:"Increase ammo capacity of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"FireRate",upgradeValue:0.1,upgradeName:"FireRate++",upgradeDescription:"Increase Fire rate of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
+            {isAvaliable:true,weaponType:"laser",upgradeType:"Damage",upgradeValue:1,upgradeName:"Damage++",upgradeDescription:"Increase the per-tick damage of Autolaser by 1"},
+            {isAvaliable:true,weaponType:"laser",upgradeType:"Range",upgradeValue:0.1,upgradeName:"Range++",upgradeDescription:"Increase the range of Autolaser by 10%"},
         ]
+        this.send(this,GameObject.getObjectByName("PlayerObject").components[4],"SendUpgrades")
 
     }
     update() {

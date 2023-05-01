@@ -11,7 +11,7 @@ class BasicEnemyComponent extends EnemyTemplate {
         this.fillStyle = ("rgba(61, 7, 9,1)")
         this.size = 15
         this.speed = 3
-        this.damage = 10
+        this.damage = 1
         this.maxHitpoints = 50
         this.hitpoints = this.maxHitpoints
         this.hitTimer = 0

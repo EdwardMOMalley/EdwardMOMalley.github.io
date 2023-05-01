@@ -80,16 +80,14 @@ class EnemyTemplate extends Component {
         }
         if (Math.abs(this.addedVelocityX) < 0.75) {
             this.addedVelocityX = 0
-            this.hitTimer = 0
             this.dampenerValX = 1
         }
         else{
             this.dampenerValX = 0
         }
         if (Math.abs(this.addedVelocityY) < 0.75) {
-            this.addedVelocityY = 1
-            this.hitTimer = 0  
-            this.dampenerValY
+            this.addedVelocityY = 0
+            this.dampenerValY = 1
         }
         else{
             this.dampenerValY = 0
@@ -117,6 +115,7 @@ class EnemyTemplate extends Component {
         if (this.hitpoints <= 0) {
             this.updateListeners(this.deadMessage)
             this.parent.destroy()
+
         }
     }
     recieveMessage(weapon, eventName) {
@@ -128,7 +127,7 @@ class EnemyTemplate extends Component {
                 this.addedVelocityX += weapon.velocity.x * 0.75
                 this.addedVelocityY += weapon.velocity.y * 0.75
                 this.lastDamageSource = weapon.name
-                GameObject.instantiate(new DamageTextObject(weapon.damage, this))
+                GameObject.instantiate(new DamageTextObject(weapon.damage, this,25))
             }
         }
         if (eventName == "ShieldHit") {
@@ -138,22 +137,22 @@ class EnemyTemplate extends Component {
                 this.addedVelocityX += weapon.velocity.x
                 this.addedVelocityY += weapon.velocity.y
                 this.lastDamageSource = weapon.name
-                GameObject.instantiate(new DamageTextObject(weapon.damage, this))
+                GameObject.instantiate(new DamageTextObject(weapon.damage, this,25,0,"white"))
             }
         }
         if (eventName == "ExplosiveHit") {
             if (this.hitTimer == 0) {
-                this.hitTimer = 25
+                this.hitTimer = 30
                 this.hitpoints -= weapon.damage
                 this.addedVelocityX += weapon.velocity.x
                 this.addedVelocityY += weapon.velocity.y
                 this.lastDamageSource = weapon.name
-                GameObject.instantiate(new DamageTextObject(weapon.damage, this))
+                GameObject.instantiate(new DamageTextObject(weapon.damage, this,25,0,"white"))
             }
         }
         if (eventName == "LaserHit") {
             this.hitpoints -= weapon.damage
-            //GameObject.instantiate(new DamageTextObject(weapon.damage,this))
+            //GameObject.instantiate(new DamageTextObject(weapon.damage,this,25,0,"white"))
         }
 
         if(eventName == "EnergyWaveHit"){

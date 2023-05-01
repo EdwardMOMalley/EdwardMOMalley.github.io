@@ -37,12 +37,20 @@ class EnemySpawnerComponent extends Component{
             return
         }
         
-        //this.functionMainSpawner()
-        this.functionSingleTest()
+        this.functionMainSpawner()
+        //this.functionSingleTest()
           //this.functionStressTest()
     }
 
     handleUpdate(component,eventName){
+        if(eventName == "BasicEnemyDestroyed"){
+            this.numberOfEnemies--
+            GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
+        }
+        if(eventName == "BossEnemyDestroyed"){
+            this.numberOfBosses--
+            GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
+        }
 
     }
 
@@ -55,7 +63,6 @@ class EnemySpawnerComponent extends Component{
     }
 
     spawnSingleBasic(){
-        this.spawnAmount = 12;
         this.spawnAngle = Math.random()*(Math.PI*2 - 0) + 0
         this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
         this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
@@ -164,9 +171,9 @@ class EnemySpawnerComponent extends Component{
 
     functionSingleTest(){
         if(this.timeRatio <= 1 && this.timeRatio > 0){
-            this.maxEnemies = 0
+            this.maxEnemies = 1
             if(this.spawnTimer >= this.spawnRate){
-                if(this.numberOfEnemies <= this.maxEnemies){
+                if(this.numberOfEnemies < this.maxEnemies){
                     this.spawnSingleBasic()
                 }
                 this.spawnTimer = 0

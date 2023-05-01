@@ -9,7 +9,7 @@ class ExperienceObject extends GameObject{
       }
     name = "ExperienceObject"
     start(){
-        this.transform.sx = 4
+        this.transform.sx = 2
         //Gold Color
         this.addComponent(new Circle("#FFD700"))
         this.addComponent(new ExperienceComponent())  

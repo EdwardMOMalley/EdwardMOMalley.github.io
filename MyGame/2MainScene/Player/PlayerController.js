@@ -2,7 +2,6 @@ import "../Items/AutoLaserObject.js"
 import "../Items/ShieldObject.js"
 import "../Items/PulseEmitterObject.js"
 import "../Hud/UpgradeBackgroundObject.js"
-import Time from "../../../engine/Time.js"
 class PlayerController extends Component{
     name = "PlayerController"
     start(){
@@ -19,15 +18,18 @@ class PlayerController extends Component{
         this.xpPickupRange = 100
 
         this.weapon = this.parent.components[3]
-        this.hasAutoLaser = false
-        this.hasShield = false
-        this.hasPulseEmitter = false
+
 
         this.upgrades = [
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Capacity",upgradeValue:0.1,upgradeName:"Capacity++",upgradeDescription:"Increase ammo capacity of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"FireRate",upgradeValue:0.1,upgradeName:"FireRate++",upgradeDescription:"Increase Fire rate of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
+            {isAvaliable:true,weaponType:"player",upgradeType:"Speed",upgradeValue:0.1,upgradeName:"Speed++",upgradeDescription:"Increase speed by 10%"},
+            {isAvaliable:true,weaponType:"player",upgradeType:"Hitpoints",upgradeValue:10,upgradeName:"HP++",upgradeDescription:"Increase total HP by  10"},
+            {isAvaliable:true,weaponType:"player",upgradeType:"XpRate",upgradeValue:0.1,upgradeName:"XP++",upgradeDescription:"Increase XP gained by  10%"}, 
+            {isAvaliable:true,weaponType:"player",upgradeType:"AutoLaser",upgradeValue:0,upgradeName:"Auto Laser",upgradeDescription:"Aquire a laser that automatically aims and fires at the nearest enemy"},
+            {isAvaliable:true,weaponType:"player",upgradeType:"Shield",upgradeValue:0,upgradeName:"Shield",upgradeDescription:"Aquire a shield that rotates around the player, damaging and pushing enemies away"},  
+            {isAvaliable:true,weaponType:"player",upgradeType:"PulseEmitter",upgradeValue:0,upgradeName:"Pulse Emitter",upgradeDescription:"Aquire a pulse emitter that shoots waves of energy periodically that push enemies away"},            
+          
+            
+           
         ]
 
 
@@ -64,18 +66,18 @@ class PlayerController extends Component{
         }
         if(this.currentExperience >= this.experienceToLevel){
             this.level++
+            this.experienceToLevel +=2
             GameObject.instantiate(new UpgradeBackgroundObject())
             if(this.level == 2){
                 this.updateListeners("Autolaser Aquired")
-                GameObject.instantiate(new AutoLaserObject())
+
             }
             else if(this.level == 3){
-                this.updateListeners("Sheild Aquired")
-                GameObject.instantiate(new ShieldObject())
+                this.updateListeners("Shield Aquired")
+
             }
             else if (this.level == 4){
-                this.updateListeners("PulseEmitterAquired")
-                GameObject.instantiate(new PulseEmitterObject())
+                this.updateListeners("PulseEmitter Aquired")
             }
             else{
                 this.updateListeners("ApplyUpgrade")
@@ -116,7 +118,7 @@ class PlayerController extends Component{
         if(eventName == "BasicEnemyHit"){
             if(!this.invincible){
                 this.hitpoints -=component.damage
-                GameObject.instantiate(new DamageTextObject(component.damage,this))
+                GameObject.instantiate(new DamageTextObject(component.damage,this,25,0,"white"))
                 this.body.fillStyle = "rgba(256, 48, 46,0.9)"
                 this.transform.x += component.velocity.x*4
                 this.transform.y += component.velocity.y*4

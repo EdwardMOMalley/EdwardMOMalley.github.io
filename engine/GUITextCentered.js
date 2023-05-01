@@ -16,7 +16,7 @@
     }
   
     
-    drawGUI(ctx) {
+    staticDraw(ctx) {
       //Set the fill style
       ctx.fillStyle = this.fillStyle
       ctx.font = this.font
