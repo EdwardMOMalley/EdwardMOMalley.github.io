@@ -38,8 +38,8 @@ class EnemySpawnerComponent extends Component{
         }
         
         //this.functionMainSpawner()
-       // this.functionSingleTest()
-          this.functionStressTest()
+        this.functionSingleTest()
+          //this.functionStressTest()
     }
 
     handleUpdate(component,eventName){

@@ -9,3 +9,12 @@ scale into logical space
 github pages
 
 
+
+
+lots of technical fixes
+...
+
+added layers
+fixed static drawing 
+fixed camera problems
+added X-To-Y conversion methods for scaling into different spaces (example: world-to-screen)

@@ -1,3 +1,5 @@
+
+
 class ExperienceComponent extends Component{
     name = "ExperienceComponent"
     start(){
@@ -26,8 +28,8 @@ class ExperienceComponent extends Component{
         this.delta.y = Math.abs(this.transform.y - (this.playerLocation.y))
         this.distanceToPlayer = Math.sqrt(this.delta.x * this.delta.x + this.delta.y * this.delta.y)
         if(this.distanceToPlayer <= this.player.xpPickupRange){
-            this.transform.x += this.velocity.x
-            this.transform.y += this.velocity.y
+            this.transform.x += this.velocity.x * Time.deltaTime
+            this.transform.y += this.velocity.y * Time.deltaTime
         }
         if(this.distanceToPlayer <= this.player.size){
                 this.updateListeners("ExperiencePickup")

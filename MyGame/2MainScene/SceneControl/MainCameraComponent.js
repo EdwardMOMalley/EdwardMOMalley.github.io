@@ -1,19 +1,44 @@
 class MainCameraComponent extends Component{
     start(){
-        this.player = GameObject.getObjectByName("PlayerObject").getComponent("PlayerController")
-        this.floor = GameObject.getObjectByName("FloorObject").getComponent("FloorComponent")
         this.parent.transform.x = 0
         this.parent.transform.y = 0
+        this.parent.transform.sx = 1
     }
     update(){
         if(!SceneManager.isRunning){
             return
         }
-        this.player = GameObject.getObjectByName("PlayerObject").getComponent("PlayerController")
-        this.worldSize = this.floor.size
-        this.size = this.player.size
-        this.speed = this.player.speed
-        this.parent.transform = this.player.transform
+        let player = GameObject.getObjectByName("PlayerObject").getComponent("PlayerController")
+        let maxDifference = 10;
+         let differenceX = player.transform.x - this.transform.x
+         let differenceY = player.transform.y - this.transform.y
+  
+        if (differenceX > maxDifference) {
+            this.transform.x += .1 * (differenceX - maxDifference)
+        }
+        else if (differenceX < -maxDifference) {
+            this.transform.x += .1 * (differenceX + maxDifference)
+        }
+        if (differenceX > maxDifference) {
+            this.transform.x += .1 * (differenceX - maxDifference)
+        }
+        else if (differenceX < -maxDifference) {
+            this.transform.x += .1 * (differenceX + maxDifference)
+        }
+
+        if (differenceY > maxDifference) {
+            this.transform.y += .1 * (differenceY - maxDifference)
+        }
+        else if (differenceY < -maxDifference) {
+            this.transform.y += .1 * (differenceY + maxDifference)
+        }
+        if (differenceY > maxDifference) {
+            this.transform.y += .1 * (differenceY - maxDifference)
+        }
+        else if (differenceY < -maxDifference) {
+            this.transform.y += .1 * (differenceY + maxDifference)
+        }
+
 
     }
     

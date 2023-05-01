@@ -2,6 +2,7 @@ class GameObject{
     name = ""
     
     components = []
+    layer = 0
     
     started = false
     markedForDestroy = false

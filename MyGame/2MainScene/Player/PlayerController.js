@@ -2,12 +2,13 @@ import "../Items/AutoLaserObject.js"
 import "../Items/ShieldObject.js"
 import "../Items/PulseEmitterObject.js"
 import "../Hud/UpgradeBackgroundObject.js"
+import Time from "../../../engine/Time.js"
 class PlayerController extends Component{
     name = "PlayerController"
     start(){
         //Stats
         this.size = 20
-        this.speed = 4
+        this.speed = 4 * 1/Time.deltaTime
         this.level = 1
         this.currentExperience = 0
         this.experienceToLevel = 1
@@ -43,7 +44,8 @@ class PlayerController extends Component{
         this.body = this.parent.components[2]
     }
 
-    update(){
+    update(ctx){
+
         if(!SceneManager.isRunning){
             return
         }
@@ -84,16 +86,16 @@ class PlayerController extends Component{
         //Movement
         {
         if(keysDown["w"]){
-            this.transform.y -=this.speed
+            this.transform.y -=this.speed * Time.deltaTime
         }
         if(keysDown["s"]){
-            this.transform.y +=this.speed
+            this.transform.y +=this.speed* Time.deltaTime
         }
         if(keysDown["a"]){
-            this.transform.x -=this.speed
+            this.transform.x -=this.speed* Time.deltaTime
         }
         if(keysDown["d"]){
-            this.transform.x +=this.speed
+            this.transform.x +=this.speed* Time.deltaTime
         }
         if(this.transform.x < (-this.worldSize/2)+this.size/2){
             this.transform.x = (-this.worldSize/2)+this.size/2

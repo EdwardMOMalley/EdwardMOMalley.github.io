@@ -12,6 +12,7 @@ import "./Text.js"
 import "./Vector2.js"
 import "./Time.js"
 import "./Input.js"
+import "./GUITextCentered.js"
 
 class EngineGlobals{
     static requestedAspectRatio = 1
@@ -107,7 +108,7 @@ function engineUpdate() {
     //but have not.
     for (let gameObject of scene.gameObjects) {
         if (gameObject.start && !gameObject.started) {
-            gameObject.start()
+            gameObject.start(ctx)
             gameObject.started = true
         }
     }
@@ -117,7 +118,7 @@ function engineUpdate() {
     for (let gameObject of scene.gameObjects) {
         for (let component of gameObject.components) {
             if (component.start && !component.started) {
-                component.start()
+                component.start(ctx)
                 component.started = true
             }
         }
@@ -200,16 +201,28 @@ function engineDraw() {
     ctx.translate(-Camera.main.transform.x, -Camera.main.transform.y)
 
 
+    let min = scene.gameObjects.filter(go=>go.components.some(c=>c.draw))
+    .map(go => go.layer)
+    .reduce((previous, current)=>Math.min(previous, current),0)
+
+    let max = scene.gameObjects.filter(go=>go.components.some(c=>c.draw))
+    .map(go => go.layer)
+    .reduce((previous, current)=>Math.max(previous, current),0)
+
     //Loop through the components and draw them.
-    for (let gameObject of scene.gameObjects) {
-        for (let component of gameObject.components) {
-            if (component.draw) {
-                component.draw(ctx)
+    for (let i = min; i <= max; i++) {
+        let gameObjects = scene.gameObjects.filter(go=>go.layer==i)
+
+        for (let gameObject of gameObjects) {
+            for (let component of gameObject.components) {
+                if (component.draw) {
+                    component.draw(ctx)
+                }
             }
         }
     }
     
-    ctx.translate(offsetX, offsetY)
+    
     ctx.restore()
 
     let zeroX = 0
@@ -235,10 +248,14 @@ function engineDraw() {
     ctx.translate(zeroX,zeroY)
     ctx.scale(logicalScale, logicalScale)
     //Static draw
-    for (let gameObject of scene.gameObjects) {
-        for (let component of gameObject.components) {
-            if (component.staticDraw) {
-                component.staticDraw(ctx)
+    for (let i = min; i <= max; i++) {
+        let gameObjects = scene.gameObjects.filter(go=>go.layer==i)
+
+        for (let gameObject of gameObjects) {
+            for (let component of gameObject.components) {
+                if (component.staticDraw) {
+                    component.staticDraw(ctx)
+                }
             }
         }
     }
