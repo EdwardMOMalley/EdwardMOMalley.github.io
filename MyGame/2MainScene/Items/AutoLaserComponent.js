@@ -2,7 +2,7 @@ class AutoLaserComponent extends Component {
     name = "AutoLaserComponent"
     start() {
         this.targetedEnemy = undefined
-        this.damage = 1
+        this.damage = 3
         this.closestEnemyDistance = 10000
         this.enemyController = GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController")
         this.player = GameObject.getObjectByName("PlayerObject")

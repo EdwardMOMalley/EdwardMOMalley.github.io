@@ -13,7 +13,7 @@ class ExplosiveLauncher extends WeaponTemplate{
         this.range = 200
         this.pellets = 1
         this.ammoLoaded = this.capacity
-        this.reloadSpeed = 125
+        this.reloadSpeed = 50
         this.reloadTimer = 0
         this.projectileLifespan = 30
         this.isExplosive = true
@@ -27,7 +27,7 @@ class ExplosiveLauncher extends WeaponTemplate{
         this.upgrades = [
             {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Damage",upgradeValue:0.1,upgradeName:"Damage++",upgradeDescription:"Increase damage of Peashooter by 10%"},
             {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Capacity",upgradeValue:1,upgradeName:"Capacity++",upgradeDescription:"Increase ammo capacity of Peashooter by 10%"},
-            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Radius",upgradeValue:0.5,upgradeName:"Radius++",upgradeDescription:"Increase explosion radius of Explosive Launcher by 50%"},
+            {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"Radius",upgradeValue:0.2,upgradeName:"Radius++",upgradeDescription:"Increase explosion radius of Explosive Launcher by 50%"},
             {isAvaliable:true,weaponType:"MainWeapon",upgradeType:"ReloadSpeed",upgradeValue:0.1,upgradeName:"Reload++",upgradeDescrption:"Increase reload speed by 10%"}
         ]
     }
@@ -38,6 +38,10 @@ class ExplosiveLauncher extends WeaponTemplate{
         }
         if(this.enemyController.currentEnemies){
             this.enemies = this.enemyController.currentEnemies
+        }
+
+        if(this.explosionRadius > 100){
+            this.explosionRadius = 100
         }
 
 

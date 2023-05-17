@@ -1,10 +1,10 @@
 class ShielComponent extends Component {
     name = "ShieldComponent"
     start() {
-        this.damage = 35
-        this.shieldSize = 6
-        this.shieldRadius = 70
-        this.angularVelocity = 0.4
+        this.damage = 60
+        this.shieldSize = 5
+        this.shieldRadius = 50
+        this.angularVelocity = 0.2
         this.angle = 0
         this.enemyController = GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController")
         this.player = GameObject.getObjectByName("PlayerObject")

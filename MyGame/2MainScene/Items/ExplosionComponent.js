@@ -30,6 +30,9 @@ class ExplosionComponent extends Component{
         }
         this.transform.sx = this.maxSize*(this.timeAlive/this.lifeSpan)
         this.parent.components[2].greenval = 256 - 256*(this.timeAlive/this.lifeSpan)
+        if(this.parent.components[2].opacity > 0.5){
+            this.parent.components[2].opacity = 1 - 1*(this.timeAlive/this.lifeSpan)
+        }
 
         this.enemies = this.enemyController.currentEnemies
         this.enemies.forEach(enemy => {

@@ -8,6 +8,7 @@ class BasicEnemyComponent extends EnemyTemplate {
         this.type = "basic"
         this.hitMessage = "BasicEnemyHit"
         this.deadMessage = "BasicEnemyDestroyed"
+        this.deadMessageSmall = "SmallBasicEnemyDestroyed"
         this.fillStyle = ("rgba(61, 7, 9,1)")
         this.size = 15
         this.speed = 3

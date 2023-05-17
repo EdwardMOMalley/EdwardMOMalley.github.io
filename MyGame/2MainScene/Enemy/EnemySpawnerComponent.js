@@ -1,6 +1,5 @@
 import "./1BasicEnemy/BasicEnemyObject.js"
 import "./BossEnemy/BossEnemyObject.js"
-import "./SwarmEnemy/SwarmEnemyObject.js"
 class EnemySpawnerComponent extends Component{
 
     name = "EnemySpawnerComponent"
@@ -40,8 +39,8 @@ class EnemySpawnerComponent extends Component{
             return
         }
         
-        //this.functionMainSpawner()
-        this.functionSingleTest()
+        this.functionMainSpawner()
+        //this.functionSingleTest()
           //this.functionStressTest()
           
 
@@ -55,6 +54,9 @@ class EnemySpawnerComponent extends Component{
         if(eventName == "BossEnemyDestroyed"){
             this.numberOfBosses--
             GameObject.instantiate(new ExperienceObject(component.transform.x,component.transform.y))
+        }
+        if(eventName == "SmallBasicEnemyDestroyed"){
+            this.numberOfEnemies--
         }
 
     }
@@ -75,21 +77,30 @@ class EnemySpawnerComponent extends Component{
         this.numberOfEnemies++
     }
 
-    spawnSingleSwarm(){
-        this.spawnAngle = Math.random()*(Math.PI*2 - 0) + 0
-        this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
-        this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
-        for(let i = 0; i < this.swarmSize; i++){
-            GameObject.instantiate(new SwarmEnemyObject(this.spawnX,this.spawnY))
+
+
+    spawnWaveStressTest(directionStart,directionEnd){
+        this.spawnAngle = directionStart
+        this.spawnAmount = 250
+        for(let i = 0; i < this.spawnAmount; i++){
+            if(this.spawnAngle >= directionEnd){
+                this.spawnAngle = directionStart
+            }
+            this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
+            this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
+            GameObject.instantiate(new BasicEnemyObject(this.spawnX,this.spawnY))
+            this.spawnAngle += Math.PI/(this.spawnAmount/2)
             this.numberOfEnemies++
         }
+        this.spawnAngle = 0
     }
 
-    spawnWaveStressTest(){
+    spawnWaveHalfCircle(){
+        //set spawn angle to 0, add enemy, rotate x degrees, spawn again until angle == 0 again.
         this.spawnAngle = 0
-        this.spawnAmount = 500
+        this.spawnAmount = 12
         for(let i = 0; i < this.spawnAmount; i++){
-            if(this.spawnAngle >= Math.PI/3){
+            if(this.spawnAngle >= Math.PI){
                 this.spawnAngle = 0
             }
             this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
@@ -104,7 +115,7 @@ class EnemySpawnerComponent extends Component{
     spawnWaveFullCircle(){
         //set spawn angle to 0, add enemy, rotate x degrees, spawn again until angle == 0 again.
         this.spawnAngle = 0
-        this.spawnAmount = 12
+        this.spawnAmount = 6
         for(let i = 0; i < this.spawnAmount; i++){
             this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
             this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
@@ -134,42 +145,65 @@ class EnemySpawnerComponent extends Component{
             if(this.spawnTimer >= this.spawnRate){
                 if(this.numberOfEnemies <= this.maxEnemies){
                     this.spawnSingleBasic()
+                    this.spawnSingleBasic()
+                    this.spawnSingleBasic()
                 }
                 this.spawnTimer = 0
             }
             this.spawnTimer++ 
         }
-        if(this.timeRatio <= 0.90 && this.timeRatio > 0.85){
+        if(this.timeRatio <= 0.90 && this.timeRatio > 0.80){
             console.log("90%")
             if(this.numberOfBosses < this.maxBosses){
                 this.spawnSingleBoss()
             }
-            this.maxEnemies = 24
-            this.spawnRate = 30
+            this.maxEnemies = 1
+            this.spawnRate = 35
             if(this.spawnTimer >= this.spawnRate){
                 if(this.numberOfEnemies <= this.maxEnemies){
-                    //this.spawnWaveFullCircle()
+                    this.spawnWaveHalfCircle()
                     this.spawnTimer = 0
                 }
             }
             this.spawnTimer++ 
         }
-        if(this.timeRatio <= 0.85 && this.timeRatio > 0.80){
-            console.log("85%")
-            this.maxEnemies = 30
-            this.spawnRate = 35
-            if(this.spawnTimer % 2 == 0){
+        if(this.timeRatio <= 0.80 && this.timeRatio > 0.70){
+            console.log("80%")
+            this.maxEnemies = 5
+            this.spawnRate = 30
+            if(this.spawnTimer % 9 == 0){
                 this.spawnSingleBasic()
-                this.spawnSingleBasic()
-                this.spawnSingleBasic()
+            }
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    
+                    this.spawnWaveHalfCircle()
+                    this.spawnTimer = 0
+                }
             }
             this.spawnTimer++ 
         }
-        if(this.timeRatio <= 0.80 && this.timeRatio > 0.75){
-            console.log("80%")
-            this.maxEnemies = 36
+        if(this.timeRatio <= 0.70 && this.timeRatio > 0.60){
+            console.log("70%")
+            this.maxEnemies = 9
             this.spawnRate = 30
-            if(this.spawnTimer % 2 == 0){
+            if(this.spawnTimer % 8 == 0){
+                this.spawnSingleBasic()
+            }
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    this.spawnWaveHalfCircle()
+                    this.spawnWaveHalfCircle()
+                    this.spawnTimer = 0
+                }
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.60 && this.timeRatio > 0.50){
+            console.log("60%")
+            this.maxEnemies = 12
+            this.spawnRate = 30
+            if(this.spawnTimer % 7 == 0){
                 this.spawnSingleBasic()
             }
             if(this.spawnTimer >= this.spawnRate){
@@ -177,6 +211,81 @@ class EnemySpawnerComponent extends Component{
                     this.spawnWaveFullCircle()
                     this.spawnTimer = 0
                 }
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.50 && this.timeRatio > 0.40){
+            console.log("50%")
+            this.maxEnemies = 50
+            this.spawnRate = 25
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    this.spawnWaveFullCircle()
+                    this.spawnWaveFullCircle()
+                    this.spawnWaveFullCircle()
+                    this.spawnWaveFullCircle()
+                    this.spawnTimer = 0
+                }
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.40 && this.timeRatio > 0.30){
+            console.log("40%")
+            this.maxEnemies = 50
+            this.spawnRate = 25
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    this.spawnWaveStressTest(0,Math.PI/2)
+                    this.spawnTimer = 0
+                }
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.30 && this.timeRatio > 0.20){
+            console.log("30%")
+            this.maxEnemies = 50
+            this.spawnRate = 25
+            if(this.numberOfBosses < 3){
+                this.spawnSingleBoss
+            }
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    this.spawnWaveStressTest(0,Math.PI*2)
+                    this.spawnTimer = 0
+                }
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.20 && this.timeRatio > 0.10){
+            console.log("30%")
+            this.maxEnemies = 50
+            this.spawnRate = 25
+            if(this.numberOfBosses < 6){
+                this.spawnSingleBoss
+            }
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    this.spawnWaveStressTest(0,Math.PI/2)
+                    this.spawnWaveStressTest(Math.PI,Math.PI+Math.PI/2)
+                    this.spawnTimer = 0
+                }
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.10 && this.timeRatio > 0.00){
+            console.log("30%")
+            this.maxEnemies = 50
+            this.spawnRate = 25
+            if(this.numberOfBosses < 6){
+                this.spawnSingleBoss
+            }
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies <= this.maxEnemies){
+                    this.spawnWaveStressTest(0,Math.PI)
+                    this.spawnWaveStressTest(Math.PI,Math.PI*2)
+                    this.spawnTimer = 0
+                }
+                this.spawnWaveFullCircle()
             }
             this.spawnTimer++ 
         }
@@ -200,7 +309,21 @@ class EnemySpawnerComponent extends Component{
             this.maxEnemies = 1
             if(this.spawnTimer >= this.spawnRate){
                 if(this.numberOfEnemies < this.maxEnemies){
-                    this.spawnSingleSwarm()
+                    this.spawnSingleBasic()
+                   
+                }
+                this.spawnTimer = 0
+            }
+            this.spawnTimer++ 
+        }
+    }
+
+    functionHalfTest(){
+        if(this.timeRatio <= 1 && this.timeRatio > 0){
+            this.maxEnemies = 1
+            if(this.spawnTimer >= this.spawnRate){
+                if(this.numberOfEnemies < this.maxEnemies){
+                    this.spawnWaveHalfCircle()
                    
                 }
                 this.spawnTimer = 0

@@ -18,7 +18,15 @@ class HudTimerComponent extends Component{
         ctx.fillRect(this.transform.x-5,this.transform.y-this.transform.sy,this.transform.sx,this.transform.sy)
         ctx.fillStyle = "white"
         ctx.font = "20px helvettica"
-        ctx.fillText(this.mainTimer.currentTime,this.transform.x,this.transform.y)
+        if(this.mainTimer.currentTime>99.9){
+            ctx.fillText(this.mainTimer.currentTime,this.transform.x-1,this.transform.y-1)
+        }
+        if(this.mainTimer.currentTime > 10 && this.mainTimer.currentTime <=99.9){
+            ctx.fillText(this.mainTimer.currentTime,this.transform.x+4,this.transform.y-1)
+        }
+        if(this.mainTimer.currentTime > 0 && this.mainTimer.currentTime <=10){
+            ctx.fillText(this.mainTimer.currentTime,this.transform.x+8,this.transform.y-1)
+        }
         
 
     }

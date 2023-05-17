@@ -4,25 +4,23 @@ import "../Enemy/EnemySpawnerComponent.js"
 import "./MainCameraComponent.js"
 import "./MainSceneController.js"
 import "../Enemy/EnemyControlObject.js"
-import "../Hud/HudHealthBarObject.js"
-import "../Hud/HudHealthBarObject.js"
-import "../Hud/HudBoarderObject.js"
 import "../Hud/HudTimerObject.js"
 import "./MainTimer.js"
-import "../Items/ShieldObject.js"
-import "../Items/AutoLaserObject.js"
+import Time from "../../../engine/Time.js"
 class MainScene extends Scene{
     constructor(){
         //Dark blue background
         super("#1d1c2e")
     }
     start(){
+        Time.time = 0;
+        
 
         //Controller
         if(GameObject.getObjectByName("CameraGameObject").components.length <= 2){
             Camera.main.addComponent(new MainCameraComponent())
         }
-                this.addGameObject(new GameObject("MainSceneControllerObject").addComponent(new MainSceneController()))
+        this.addGameObject(new GameObject("MainSceneControllerObject").addComponent(new MainSceneController()))
 
 
         //World

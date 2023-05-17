@@ -8,11 +8,9 @@ class LoseObject extends GameObject{
 
         this.transform.sx = 100
         this.transform.sy = 100
-        this.transform.x = -logicalWidth/2
-        this.transform.y = -logicalWidth/2
-        //this.addComponent(new Rectangle("green"))
+        this.transform.x = -EngineGlobals.logicalWidth/2
+        this.transform.y = -EngineGlobals.logicalWidth/2
         this.addComponent(new LoseComponent())
-
         this.addComponent(new LoseDrawComponent())
     }
 

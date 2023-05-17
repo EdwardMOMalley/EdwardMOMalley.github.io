@@ -2,6 +2,7 @@ import "./BasicEnemyComponent.js"
 import "../EnemyHealthBarComponent.js"
 class BasicEnemyObject extends GameObject{
     name = "BasicEnemyObject"
+    layer = 1
     constructor(x,y){
         super()
         this.transform.x = x

@@ -39,6 +39,13 @@ class MainEnemyController extends Component{
                                     if(enemy.transform.y < enemy2.transform.y){
                                         enemy.transform.y -=1
                                     }
+                                    if(enemy.transform.y == enemy2.transform.y){
+                                        enemy.transform.y += Math.random()*(2*2 - 1) + 1
+                                    }
+                                    if(enemy.transform.x == enemy2.transform.x){
+                                       enemy.transform.x +=  Math.random()*(2*2 - 1) + 1
+                                    }
+                                   
                                 }
                             }
                         }

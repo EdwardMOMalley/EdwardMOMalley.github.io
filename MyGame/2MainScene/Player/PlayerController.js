@@ -2,16 +2,18 @@ import "../Items/AutoLaserObject.js"
 import "../Items/ShieldObject.js"
 import "../Items/PulseEmitterObject.js"
 import "../Hud/UpgradeBackgroundObject.js"
+import "../Items/ScattershotComponent.js"
+import "../Items/ExplosiveLauncher.js"
 class PlayerController extends Component{
     name = "PlayerController"
     start(){
         //Stats
         this.size = 20
-        this.speed = 4
+        this.speed = 6
         this.level = 1
         this.currentExperience = 0
         this.experienceToLevel = 1
-        this.maxHitpoints = 5
+        this.maxHitpoints = 3
         this.hitpoints = this.maxHitpoints
         this.invincible = false
         this.invincibleTimer = 50
@@ -31,7 +33,6 @@ class PlayerController extends Component{
             
            
         ]
-
 
         //Transform
         this.transform.x = 0
@@ -74,16 +75,32 @@ class PlayerController extends Component{
         if(this.currentExperience >= this.experienceToLevel){
             this.level++
             this.experienceToLevel +=2
-            GameObject.instantiate(new UpgradeBackgroundObject())
             if(this.level == 2){
-                this.updateListeners("Autolaser Aquired")
-
+                this.updateListeners("ApplyUpgrade")
             }
             else if(this.level == 3){
+                this.updateListeners("ApplyUpgrade")
+            }
+            else if(this.level == 4){
+                this.updateListeners("Autolaser Aquired")
+            }
+            else if(this.level == 5){
+                this.updateListeners("ApplyUpgrade")
+            }
+            else if(this.level == 6){
+                this.updateListeners("ApplyUpgrade")
+            }
+            else if(this.level == 7){
                 this.updateListeners("Shield Aquired")
 
             }
-            else if (this.level == 4){
+            else if(this.level == 8){
+                this.updateListeners("ApplyUpgrade")
+            }
+            else if(this.level == 9){
+                this.updateListeners("ApplyUpgrade")
+            }
+            else if (this.level == 10){
                 this.updateListeners("PulseEmitter Aquired")
             }
             else{

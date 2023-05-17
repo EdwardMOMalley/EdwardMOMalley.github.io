@@ -1,6 +1,7 @@
 import "./ShieldComponent.js"
 class ShieldObject extends GameObject{
     name = "ShieldObject"
+    layer = 5
     start(){
         //this.addComponent(new ShieldComponentDraw())
         //light blue

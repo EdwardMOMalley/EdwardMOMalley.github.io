@@ -13,11 +13,23 @@ class EnemyTemplate extends Component {
     lastDamageSource = undefined
     hitMessage = "EnemyTemplateHit"
     deadMessage = "EnemyTemplateDestroyed"
+    deadMessageSmall = "SmallEnemyTemplateDestroyed"
+    
     start() {
         this.worldSize = GameObject.getObjectByName("FloorObject").getComponent("FloorComponent").size
         this.playerLocation = GameObject.getObjectByName("PlayerObject").transform
         this.enemySpawner = GameObject.getObjectByName("EnemyControlObject").getComponent("EnemySpawnerComponent")
-        this.maxHitpoints = (1-this.enemySpawner.timeRatio)*this.maxHitpoints + this.maxHitpoints
+        if((this.enemySpawner.timeRatio) < 0.5){
+            if(this.type == "basic"){
+                this.maxHitpoints = 5
+                this.size = 11
+                this.speed = 4
+                this.fillStyle = "rgba(44, 7, 9,1)"
+            }
+        }
+        else{
+            this.maxHitpoints = (1-this.enemySpawner.timeRatio)*this.maxHitpoints + this.maxHitpoints
+        }
         this.hitpoints = this.maxHitpoints
         this.body = this.parent.getComponent("Rectangle")
         this.defaultFill = this.body.fillStyle
@@ -116,7 +128,13 @@ class EnemyTemplate extends Component {
             }
         }
         if (this.hitpoints <= 0) {
-            this.updateListeners(this.deadMessage)
+            if(this.size < 14){
+                this.updateListeners(this.deadMessageSmall)
+            }
+            else{
+                this.updateListeners(this.deadMessage)
+            }
+
             this.parent.destroy()
 
         }
@@ -134,14 +152,12 @@ class EnemyTemplate extends Component {
             }
         }
         if (eventName == "ShieldHit") {
-            if (this.hitTimer == 0) {
-                this.hitTimer = 25
                 this.hitpoints -= weapon.damage
                 this.addedVelocityX += weapon.velocity.x
                 this.addedVelocityY += weapon.velocity.y
                 this.lastDamageSource = weapon.name
                 GameObject.instantiate(new DamageTextObject(weapon.damage, this,25,0,"white"))
-            }
+            
         }
         if (eventName == "ExplosiveHit") {
             if (this.hitTimer == 0) {
@@ -150,7 +166,9 @@ class EnemyTemplate extends Component {
                 this.addedVelocityX += weapon.velocity.x
                 this.addedVelocityY += weapon.velocity.y
                 this.lastDamageSource = weapon.name
-                GameObject.instantiate(new DamageTextObject(weapon.damage, this,25,0,"white"))
+                if(this.size > 14){
+                    GameObject.instantiate(new DamageTextObject(weapon.damage, this,25,0,"white"))
+                }
             }
         }
         if (eventName == "LaserHit") {

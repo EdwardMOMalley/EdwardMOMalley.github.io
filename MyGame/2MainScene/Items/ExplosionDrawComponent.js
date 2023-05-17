@@ -3,6 +3,7 @@ class ExplosionDrawComponent extends Component{
     start(){
         this.redval = 256
         this.greenval = 256
+        this.opacity = 1
 
     }
 
@@ -11,11 +12,14 @@ class ExplosionDrawComponent extends Component{
     }
     draw(ctx){
         //Red-orange explosion
-        ctx.fillStyle = "rgb(" + this.redval + "," + this.greenval + ", 7)"
+        "rgba(256, 0, 0,0.4)"
+        ctx.fillStyle = "rgba(" + this.redval + "," + this.greenval + ", 7," + this.opacity,")"
+        ctx.strokeStyle = "red"
+        ctx.lineWidth = 1
         ctx.beginPath()
         ctx.arc(this.transform.x, this.transform.y, this.transform.sx, 0, Math.PI * 2)
         ctx.fill()
-        ctx.stroke();
+        //ctx.stroke();
 
     }
 }

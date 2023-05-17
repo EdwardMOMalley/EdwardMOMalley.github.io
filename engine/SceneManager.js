@@ -42,7 +42,6 @@ class SceneManager{
     }
 
     static changeScene(index){
-
         SceneManager.currentSceneIndex = index
         SceneManager.changedSceneFlag = true
     }
