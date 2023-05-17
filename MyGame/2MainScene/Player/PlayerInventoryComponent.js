@@ -103,7 +103,6 @@ class PlayerInventoryComponent extends Component{
                 this.masterUpgrades.push(upgrade)
             }
             this.masterUpgrades.sort(() => Math.random() - 0.5)
-            console.log(this.masterUpgrades)
         }
     }
 

@@ -7,11 +7,11 @@ class PlayerController extends Component{
     start(){
         //Stats
         this.size = 20
-        this.speed = 4 * 1/Time.deltaTime
+        this.speed = 4
         this.level = 1
         this.currentExperience = 0
         this.experienceToLevel = 1
-        this.maxHitpoints = 30
+        this.maxHitpoints = 5
         this.hitpoints = this.maxHitpoints
         this.invincible = false
         this.invincibleTimer = 50
@@ -38,6 +38,13 @@ class PlayerController extends Component{
         this.transform.y = 0
         this.transform.sx = this.size
         this.transform.sy = this.size
+
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+        this.addedVelocityX = 0
+        this.addedVelocityY = 0
 
         //Required World Information and Listeners
         this.worldSize = GameObject.getObjectByName("FloorObject").getComponent("FloorComponent").size
@@ -88,16 +95,48 @@ class PlayerController extends Component{
         //Movement
         {
         if(keysDown["w"]){
-            this.transform.y -=this.speed * Time.deltaTime
+            this.velocity.y = -this.speed*1
         }
         if(keysDown["s"]){
-            this.transform.y +=this.speed* Time.deltaTime
+            this.velocity.y = this.speed*1
         }
         if(keysDown["a"]){
-            this.transform.x -=this.speed* Time.deltaTime
+            this.velocity.x = -this.speed*1
         }
         if(keysDown["d"]){
-            this.transform.x +=this.speed* Time.deltaTime
+            this.velocity.x = this.speed*1
+        }
+        this.transform.x += this.velocity.x +this.addedVelocityX
+        this.transform.y += this.velocity.y + this.addedVelocityY
+        if(this.velocity.y <=0 && !keysDown["w"]){
+            this.velocity.y++
+        }
+        if(this.velocity.y>0 && !keysDown["s"]){
+            this.velocity.y--
+        }
+        if(this.velocity.x <=0 && !keysDown["a"]){
+            this.velocity.x++
+        }
+        if(this.velocity.x>0 && !keysDown["d"]){
+            this.velocity.x--
+        }
+        if (this.addedVelocityX > 0) {
+            this.addedVelocityX -= 0.75
+        }
+        if (this.addedVelocityY > 0) {
+            this.addedVelocityY -= 0.75
+        }
+        if (this.addedVelocityX < 0) {
+            this.addedVelocityX += 0.75
+        }
+        if (this.addedVelocityY < 0) {
+            this.addedVelocityY += 0.75
+        }
+        if (Math.abs(this.addedVelocityX) < 0.75) {
+            this.addedVelocityX = 0
+        }
+        if (Math.abs(this.addedVelocityY) < 0.75) {
+            this.addedVelocityY = 0
         }
         if(this.transform.x < (-this.worldSize/2)+this.size/2){
             this.transform.x = (-this.worldSize/2)+this.size/2
@@ -120,8 +159,8 @@ class PlayerController extends Component{
                 this.hitpoints -=component.damage
                 GameObject.instantiate(new DamageTextObject(component.damage,this,25,0,"white"))
                 this.body.fillStyle = "rgba(256, 48, 46,0.9)"
-                this.transform.x += component.velocity.x*4
-                this.transform.y += component.velocity.y*4
+                this.addedVelocityX += component.velocity.x*4
+                this.addedVelocityY += component.velocity.y*4
                 this.invincible = true
             }
 

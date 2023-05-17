@@ -1,13 +1,7 @@
 class EnemyHealthBarComponent extends Component{
     name = "EnemyHealthBarComponent"
     start(){
-        this.body = undefined
-        if(this.parent.getComponent("BossEnemyComponent")){
-            this.body = this.parent.getComponent("BossEnemyComponent")
-        }
-        if(this.parent.getComponent("BasicEnemyComponent")){
-            this.body = this.parent.getComponent("BasicEnemyComponent")
-        }
+        this.body = this.parent.components[1]
         this.maxHp = this.body.maxHitpoints
 
     }

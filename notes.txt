@@ -1,23 +1,7 @@
-move 0 0 to center
-scale into logical space
-translate via camera
+TODO
 
-\
-gui space
-move w/ letterboxing
-scale into logical space
-github pages
+upgrades
+hud elements 
+balance
 
 
-
-
-lots of technical fixes
-...
-
-added layers
-fixed static drawing 
-fixed camera problems
-added X-To-Y conversion methods for scaling into different spaces (example: world-to-screen)
-
-for enemy Listeners
-each enemy should listen for main enemy enemycontroller

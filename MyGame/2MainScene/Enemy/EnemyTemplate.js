@@ -1,7 +1,7 @@
 class EnemyTemplate extends Component {
     name = "EnemyTemplate"
     type = "basic"
-    fillStyle = ("rgba(61, 7, 9,1)")
+    fillStyle = "rgba(61, 7, 9,1)"
     size = 15
     speed = 3
     damage = 10
@@ -16,6 +16,9 @@ class EnemyTemplate extends Component {
     start() {
         this.worldSize = GameObject.getObjectByName("FloorObject").getComponent("FloorComponent").size
         this.playerLocation = GameObject.getObjectByName("PlayerObject").transform
+        this.enemySpawner = GameObject.getObjectByName("EnemyControlObject").getComponent("EnemySpawnerComponent")
+        this.maxHitpoints = (1-this.enemySpawner.timeRatio)*this.maxHitpoints + this.maxHitpoints
+        this.hitpoints = this.maxHitpoints
         this.body = this.parent.getComponent("Rectangle")
         this.defaultFill = this.body.fillStyle
         this.transform.sx = this.size
@@ -33,7 +36,7 @@ class EnemyTemplate extends Component {
 
         this.addListener(GameObject.getObjectByName("PlayerObject").getComponent("PlayerController"))
         this.addListener(GameObject.getObjectByName("EnemyControlObject").getComponent("MainEnemyController"))
-        this.addListener(GameObject.getObjectByName("EnemyControlObject").getComponent("EnemySpawnerComponent"))
+        this.addListener(this.enemySpawner)
         this.updateListeners("BasicEnemySpawned")
     }
 

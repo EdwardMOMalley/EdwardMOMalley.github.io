@@ -1,18 +1,18 @@
 import "../../Hud/DamageTextObject.js"
 import "../EnemyTemplate.js"
-class BasicEnemyComponent extends EnemyTemplate {
+class SwarmEnemyComponent extends EnemyTemplate {
 
     constructor(){
         super()
-        this.name = "BasicEnemyComponent"
-        this.type = "basic"
-        this.hitMessage = "BasicEnemyHit"
+        this.name = "SwarmEnemyComponent"
+        this.type = "swarm"
+        this.hitMessage = "SwarmEnemyHit"
         this.deadMessage = "BasicEnemyDestroyed"
-        this.fillStyle = ("rgba(61, 7, 9,1)")
-        this.size = 15
-        this.speed = 3
+        this.fillStyle = ("rgba(135,87,47,1)")
+        this.size = 12
+        this.speed = 5
         this.damage = 1
-        this.maxHitpoints = 45
+        this.maxHitpoints = 5
         this.hitpoints = this.maxHitpoints
         this.hitTimer = 0
         this.pulseHitTimer = 0
@@ -20,4 +20,4 @@ class BasicEnemyComponent extends EnemyTemplate {
         this.lastDamageSource = undefined
     }
 }
-window.BasicEnemyComponent = BasicEnemyComponent
+window.SwarmEnemyComponent = SwarmEnemyComponent

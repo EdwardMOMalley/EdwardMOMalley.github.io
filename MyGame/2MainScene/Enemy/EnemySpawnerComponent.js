@@ -1,15 +1,18 @@
 import "./1BasicEnemy/BasicEnemyObject.js"
 import "./BossEnemy/BossEnemyObject.js"
+import "./SwarmEnemy/SwarmEnemyObject.js"
 class EnemySpawnerComponent extends Component{
 
     name = "EnemySpawnerComponent"
     start(){
         this.spawnRate = 50
         this.spawnTimer= 50
+        this.timeRatio = 0
         this.spawnAmount = 1
         this.minDistance = 300
         this.maxEnemies = 50
         this.maxBosses = 1
+        this.swarmSize = 10
         this.numberOfEnemies = 0
         this.numberOfBosses = 0
         this.spawnAngle = 0
@@ -37,9 +40,11 @@ class EnemySpawnerComponent extends Component{
             return
         }
         
-        this.functionMainSpawner()
-        //this.functionSingleTest()
+        //this.functionMainSpawner()
+        this.functionSingleTest()
           //this.functionStressTest()
+          
+
     }
 
     handleUpdate(component,eventName){
@@ -68,6 +73,16 @@ class EnemySpawnerComponent extends Component{
         this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
         GameObject.instantiate(new BasicEnemyObject(this.spawnX,this.spawnY))
         this.numberOfEnemies++
+    }
+
+    spawnSingleSwarm(){
+        this.spawnAngle = Math.random()*(Math.PI*2 - 0) + 0
+        this.spawnX = this.playerTransform.x + this.minDistance * Math.cos(this.spawnAngle)
+        this.spawnY = this.playerTransform.y + this.minDistance * Math.sin(this.spawnAngle)
+        for(let i = 0; i < this.swarmSize; i++){
+            GameObject.instantiate(new SwarmEnemyObject(this.spawnX,this.spawnY))
+            this.numberOfEnemies++
+        }
     }
 
     spawnWaveStressTest(){
@@ -133,7 +148,7 @@ class EnemySpawnerComponent extends Component{
             this.spawnRate = 30
             if(this.spawnTimer >= this.spawnRate){
                 if(this.numberOfEnemies <= this.maxEnemies){
-                    this.spawnWaveFullCircle()
+                    //this.spawnWaveFullCircle()
                     this.spawnTimer = 0
                 }
             }
@@ -141,6 +156,17 @@ class EnemySpawnerComponent extends Component{
         }
         if(this.timeRatio <= 0.85 && this.timeRatio > 0.80){
             console.log("85%")
+            this.maxEnemies = 30
+            this.spawnRate = 35
+            if(this.spawnTimer % 2 == 0){
+                this.spawnSingleBasic()
+                this.spawnSingleBasic()
+                this.spawnSingleBasic()
+            }
+            this.spawnTimer++ 
+        }
+        if(this.timeRatio <= 0.80 && this.timeRatio > 0.75){
+            console.log("80%")
             this.maxEnemies = 36
             this.spawnRate = 30
             if(this.spawnTimer % 2 == 0){
@@ -174,7 +200,8 @@ class EnemySpawnerComponent extends Component{
             this.maxEnemies = 1
             if(this.spawnTimer >= this.spawnRate){
                 if(this.numberOfEnemies < this.maxEnemies){
-                    this.spawnSingleBasic()
+                    this.spawnSingleSwarm()
+                   
                 }
                 this.spawnTimer = 0
             }

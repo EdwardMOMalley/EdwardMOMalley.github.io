@@ -10,14 +10,15 @@ import "./PlayerInventoryComponent.js"
 class PlayerObject extends GameObject{
     name = "PlayerObject"
     fillStyle = "#33302e"
+    layer = 10
     start(){
         this.addComponent(new PlayerController())
         //Dark grayish
         this.addComponent(new Rectangle(this.fillStyle))
         //weapon always needs to be in components[3]
         //Peashooter, explosive launcher, scattershot
-       // this.addComponent(new Peashooter())
-       // this.addComponent(new ScattershotComponent())
+        //this.addComponent(new Peashooter())
+        //this.addComponent(new ScattershotComponent())
         this.addComponent(new ExplosiveLauncher())
         //inventory is always components[4]
         this.addComponent(new PlayerInventoryComponent())
