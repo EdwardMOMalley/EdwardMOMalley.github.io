@@ -5,6 +5,9 @@ class MainTimer extends Component{
         this.timeGoal = 50 * 2
         this.currentTime = 0
         this.addListener(GameObject.getObjectByName("MainSceneControllerObject").getComponent("MainSceneController"))
+        if(!document.cookie){
+            document.cookie = 0
+        }
 
         }
 
